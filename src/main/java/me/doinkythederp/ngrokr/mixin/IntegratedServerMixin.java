@@ -4,6 +4,7 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.github.alexdlaird.ngrok.protocol.Tunnel;
@@ -51,5 +52,10 @@ public class IntegratedServerMixin {
                         Text.literal("Failed to publish LAN server. Is your ngrok authentication token valid?"));
             }
         }
+    }
+
+    @Inject(at = @At("RETURN"), method = "stop")
+    private void afterStop(boolean joinServerThread, CallbackInfo info) {
+        NgrokrMod.disconnectTunnel();
     }
 }
