@@ -107,7 +107,7 @@ public class NgrokrMod implements ModInitializer {
     }
 
     private static void startNgrokClient() {
-        loadToken();
+        ngrokToken = loadToken();
         if (!ngrokToken.isPresent()) {
             LOGGER.debug("No ngrok token found, publishing LAN servers is not available.");
             return;
