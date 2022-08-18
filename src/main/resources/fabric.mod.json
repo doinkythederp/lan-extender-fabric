@@ -11,7 +11,7 @@
         "sources": "https://github.com/doinkythederp/ngrokr-fabric"
     },
     "license": "UNLICENSED",
-    "icon": "assets/modid/icon.png",
+    "icon": "assets/ngrokr/icon.png",
     "environment": "*",
     "entrypoints": {
         "main": [

@@ -44,7 +44,9 @@ public class IntegratedServerMixin {
 
             try {
                 Tunnel tunnel = NgrokrMod.publishPort(port);
-                chat.addMessage(Text.literal("Others can join your LAN server at " + tunnel.getPublicUrl()));
+                chat.addMessage(Text
+                        .literal("Others can join your world using the following server address: "
+                                + tunnel.getPublicUrl().replace("tcp://", "")));
             } catch (Exception e) {
                 NgrokrMod.LOGGER.error(e.getClass().getSimpleName() + ": "
                         + e.getMessage());
