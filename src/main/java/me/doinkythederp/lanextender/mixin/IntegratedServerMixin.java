@@ -46,13 +46,13 @@ public class IntegratedServerMixin {
             try {
                 Tunnel tunnel = LANExtenderMod.publishPort(port);
                 chat.addMessage(Text
-                        .literal("Others can join your world using the following server address: "
+                        .literal("Your server is joinable @ "
                                 + tunnel.getPublicUrl().replace("tcp://", "")));
             } catch (Exception e) {
                 LANExtenderMod.LOGGER.error(e.getClass().getSimpleName() + ": "
                         + e.getMessage());
                 chat.addMessage(
-                        Text.literal("Failed to publish LAN server. Is your ngrok authentication token valid?"));
+                        Text.literal("Failed to publish LAN server. Is your ngrok authtoken valid?"));
             }
         }
     }
