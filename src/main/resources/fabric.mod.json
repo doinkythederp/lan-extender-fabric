@@ -3,7 +3,7 @@
     "id": "ngrokr",
     "version": "${version}",
     "name": "Ngrokr",
-    "description": "A Minecraft mod that allows people on a different Internet network to join your LAN world.",
+    "description": "Allows people on a different Internet network to join your LAN world.",
     "authors": [
         "doinkythederp"
     ],
@@ -16,6 +16,9 @@
     "entrypoints": {
         "main": [
             "me.doinkythederp.ngrokr.NgrokrMod"
+        ],
+        "modmenu": [
+            "me.doinkythederp.ngrokr.NgrokrModMenuIntegration"
         ]
     },
     "mixins": [
