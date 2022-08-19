@@ -1,4 +1,4 @@
-package me.doinkythederp.ngrokr;
+package me.doinkythederp.lanextender;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
@@ -20,11 +20,11 @@ import com.github.alexdlaird.ngrok.protocol.CreateTunnel;
 import com.github.alexdlaird.ngrok.protocol.Proto;
 import com.github.alexdlaird.ngrok.protocol.Tunnel;
 
-public class NgrokrMod implements ModInitializer {
+public class LANExtenderMod implements ModInitializer {
     // This logger is used to write text to the console and the log file.
     // It is considered best practice to use your mod id as the logger's name.
     // That way, it's clear which mod wrote info, warnings, and errors.
-    public static final Logger LOGGER = LoggerFactory.getLogger("ngrokr");
+    public static final Logger LOGGER = LoggerFactory.getLogger("lan_extender");
 
     public static final Text checkboxMessage = Text.translatable("lanServer.publish");
     public static Optional<CheckboxWidget> publishCheckbox = Optional.empty();
@@ -43,8 +43,8 @@ public class NgrokrMod implements ModInitializer {
         // However, some things (like resources) may still be uninitialized.
         // Proceed with mild caution.
 
-        ngrokPath = FabricLoader.getInstance().getGameDir().resolve("ngrokr").resolve("ngrok");
-        configPath = FabricLoader.getInstance().getConfigDir().resolve("NgrokrAuthToken.txt");
+        ngrokPath = FabricLoader.getInstance().getGameDir().resolve("lan_extender").resolve("ngrok");
+        configPath = FabricLoader.getInstance().getConfigDir().resolve("LANExtenderAuthToken.txt");
 
         if (ngrokPath.toFile().exists()) {
             ngrokInstalled = true;
@@ -102,7 +102,7 @@ public class NgrokrMod implements ModInitializer {
         } catch (Exception e) {
             LOGGER.error("Failed to write config file: {}", e.getMessage());
         }
-        NgrokrMod.ngrokToken = Optional.of(ngrokToken);
+        LANExtenderMod.ngrokToken = Optional.of(ngrokToken);
         startNgrokClient();
     }
 
@@ -163,6 +163,6 @@ public class NgrokrMod implements ModInitializer {
      * @return Returns true if the publish checkbox was present and checked.
      */
     public static boolean lanServersShouldPublish() {
-        return NgrokrMod.publishCheckbox.isPresent() && NgrokrMod.publishCheckbox.get().isChecked();
+        return LANExtenderMod.publishCheckbox.isPresent() && LANExtenderMod.publishCheckbox.get().isChecked();
     }
 }

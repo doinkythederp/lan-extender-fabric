@@ -1,9 +1,9 @@
-package me.doinkythederp.ngrokr.mixin;
+package me.doinkythederp.lanextender.mixin;
 
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import me.doinkythederp.ngrokr.NgrokrMod;
+import me.doinkythederp.lanextender.LANExtenderMod;
 
 import java.util.Optional;
 
@@ -16,11 +16,11 @@ import net.minecraft.client.MinecraftClient;
 public class MinecraftClientMixin {
     @Inject(at = @At("HEAD"), method = "setScreen")
     private void clearLANScreenCheckbox(@Nullable net.minecraft.client.gui.screen.Screen screen, CallbackInfo info) {
-        if (screen != null && NgrokrMod.publishCheckbox.isPresent()) {
+        if (screen != null && LANExtenderMod.publishCheckbox.isPresent()) {
             // Checkbox state should not persist after closing the Open To LAN screen.
             // This would mess up the /publish command, which should not start an ngrok
             // session.
-            NgrokrMod.publishCheckbox = Optional.empty();
+            LANExtenderMod.publishCheckbox = Optional.empty();
         }
     }
 }

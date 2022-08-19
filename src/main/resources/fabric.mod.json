@@ -1,30 +1,30 @@
 {
     "schemaVersion": 1,
-    "id": "ngrokr",
+    "id": "lan_extender",
     "version": "${version}",
-    "name": "Ngrokr",
-    "description": "Ngrokr generates a server address when you start your LAN worlds that lets others connect – even if they're connected to a different router!",
+    "name": "LAN Extender",
+    "description": "Generates a server address when you start your LAN worlds that lets others connect – even if they're connected to a different router!",
     "authors": [
         "doinkythederp"
     ],
     "contact": {
-        "sources": "https://github.com/doinkythederp/ngrokr-fabric",
-        "homepage": "https://github.com/doinkythederp/ngrokr-fabric#readme",
-        "issues": "https://github.com/doinkythederp/ngrokr-fabric/issues"
+        "sources": "https://github.com/doinkythederp/lan-extender-fabric",
+        "homepage": "https://github.com/doinkythederp/lan-extender-fabric#readme",
+        "issues": "https://github.com/doinkythederp/lan-extender-fabric/issues"
     },
     "license": "ISC",
-    "icon": "assets/ngrokr/icon.png",
+    "icon": "assets/lan_extender/icon.png",
     "environment": "*",
     "entrypoints": {
         "main": [
-            "me.doinkythederp.ngrokr.NgrokrMod"
+            "me.doinkythederp.lanextender.LANExtenderMod"
         ],
         "modmenu": [
-            "me.doinkythederp.ngrokr.NgrokrModMenuIntegration"
+            "me.doinkythederp.lanextender.LANExtenderModMenuIntegration"
         ]
     },
     "mixins": [
-        "ngrokr.mixins.json"
+        "lan_extender.mixins.json"
     ],
     "depends": {
         "fabricloader": ">=0.14.6",
@@ -35,5 +35,5 @@
     "suggests": {
         "modmenu": ">=4.0.6"
     },
-    "accessWidener": "ngrokr.accesswidener"
+    "accessWidener": "lan_extender.accesswidener"
 }

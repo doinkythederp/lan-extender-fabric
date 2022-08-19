@@ -1,6 +1,0 @@
-{
-    "lanServer.publish": "Allow players connected to a different router to join",
-    "title.ngrokr.config": "Ngrokr Options",
-    "option.ngrokr.auth_token": "Ngrok Authtoken",
-    "tooltip.ngrokr.auth_token": "Get this from \"Your Authtoken\" at www.ngrok.com"
-}

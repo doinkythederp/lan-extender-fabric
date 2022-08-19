@@ -1,4 +1,4 @@
-package me.doinkythederp.ngrokr.mixin;
+package me.doinkythederp.lanextender.mixin;
 
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.github.alexdlaird.ngrok.protocol.Tunnel;
 
-import me.doinkythederp.ngrokr.NgrokrMod;
+import me.doinkythederp.lanextender.LANExtenderMod;
 
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -31,24 +31,25 @@ public class IntegratedServerMixin {
         // A. the user might have used the /publish command instead
         // B. the user might have not checked the "yes, publish server" checkbox on the
         // LAN screen
-        if (NgrokrMod.lanServersShouldPublish()) {
-            NgrokrMod.LOGGER.info("Starting ngrok tunnel through {}…", port);
+        if (LANExtenderMod.lanServersShouldPublish()) {
+            LANExtenderMod.LOGGER.info("Starting ngrok tunnel through {}…", port);
             ChatHud chat = this.client.inGameHud.getChatHud();
 
-            if (!NgrokrMod.getNgrokToken().isPresent()) {
+            if (!LANExtenderMod.getNgrokToken().isPresent()) {
                 // TODO: explain how to add an ngrok auth token
-                // Right now you have to put it in the NgrokrAuthToken.txt config file
-                chat.addMessage(Text.literal("Ngrokr requires an ngrok authentication token to publish servers."));
+                // Right now you have to put it in the LANExtenderAuthToken.txt config file
+                chat.addMessage(
+                        Text.literal("LAN Extender requires an ngrok authentication token to publish servers."));
                 return;
             }
 
             try {
-                Tunnel tunnel = NgrokrMod.publishPort(port);
+                Tunnel tunnel = LANExtenderMod.publishPort(port);
                 chat.addMessage(Text
                         .literal("Others can join your world using the following server address: "
                                 + tunnel.getPublicUrl().replace("tcp://", "")));
             } catch (Exception e) {
-                NgrokrMod.LOGGER.error(e.getClass().getSimpleName() + ": "
+                LANExtenderMod.LOGGER.error(e.getClass().getSimpleName() + ": "
                         + e.getMessage());
                 chat.addMessage(
                         Text.literal("Failed to publish LAN server. Is your ngrok authentication token valid?"));
@@ -58,6 +59,6 @@ public class IntegratedServerMixin {
 
     @Inject(at = @At("RETURN"), method = "stop")
     private void afterStop(boolean joinServerThread, CallbackInfo info) {
-        NgrokrMod.disconnectTunnel();
+        LANExtenderMod.disconnectTunnel();
     }
 }

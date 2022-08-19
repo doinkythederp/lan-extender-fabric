@@ -1,4 +1,4 @@
-package me.doinkythederp.ngrokr.mixin;
+package me.doinkythederp.lanextender.mixin;
 
 import java.util.Optional;
 
@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import me.doinkythederp.ngrokr.NgrokrMod;
+import me.doinkythederp.lanextender.LANExtenderMod;
 
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -18,10 +18,10 @@ public class OpenToLANScreenMixin {
     @Inject(at = @At("TAIL"), method = "init()V")
     private void init(CallbackInfo info) {
         var lanScreen = (ScreenAccessor) (Object) this;
-        int messageWidth = lanScreen.getTextRenderer().getWidth(NgrokrMod.checkboxMessage);
-        NgrokrMod.publishCheckbox = Optional.of(
+        int messageWidth = lanScreen.getTextRenderer().getWidth(LANExtenderMod.checkboxMessage);
+        LANExtenderMod.publishCheckbox = Optional.of(
                 new CheckboxWidget((lanScreen.getWidth() - messageWidth) / 2 - 8, 128, messageWidth + 24, 20,
-                        NgrokrMod.checkboxMessage, false));
-        lanScreen.invokeAddDrawableChild(NgrokrMod.publishCheckbox.get());
+                        LANExtenderMod.checkboxMessage, false));
+        lanScreen.invokeAddDrawableChild(LANExtenderMod.publishCheckbox.get());
     }
 }

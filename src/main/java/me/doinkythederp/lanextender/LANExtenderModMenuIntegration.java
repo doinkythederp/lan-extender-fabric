@@ -1,4 +1,4 @@
-package me.doinkythederp.ngrokr;
+package me.doinkythederp.lanextender;
 
 import java.util.Optional;
 
@@ -9,25 +9,26 @@ import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import net.minecraft.text.Text;
 
-public class NgrokrModMenuIntegration implements ModMenuApi {
+public class LANExtenderModMenuIntegration implements ModMenuApi {
     private static Optional<String> unsavedAuthToken = Optional.empty();
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return parent -> {
-            unsavedAuthToken = Optional.of(NgrokrMod.getNgrokToken().orElse(""));
+            unsavedAuthToken = Optional.of(LANExtenderMod.getNgrokToken().orElse(""));
             ConfigBuilder builder = ConfigBuilder.create()
                     .setParentScreen(parent)
-                    .setTitle(Text.translatable("title.ngrokr.config"))
+                    .setTitle(Text.translatable("title.lan_extender.config"))
                     .setSavingRunnable(() -> {
-                        NgrokrMod.setNgrokToken(unsavedAuthToken.get());
+                        LANExtenderMod.setNgrokToken(unsavedAuthToken.get());
                         unsavedAuthToken = Optional.empty();
                     });
-            ConfigCategory general = builder.getOrCreateCategory(Text.translatable("category.ngrokr.general"));
+            ConfigCategory general = builder.getOrCreateCategory(Text.translatable("category.lan_extender.general"));
             general.addEntry(builder.entryBuilder()
-                    .startStrField(Text.translatable("option.ngrokr.auth_token"), NgrokrMod.getNgrokToken().orElse(""))
+                    .startStrField(Text.translatable("option.lan_extender.auth_token"),
+                            LANExtenderMod.getNgrokToken().orElse(""))
                     .setDefaultValue("todo: change to something useful")
-                    .setTooltip(Text.translatable("tooltip.ngrokr.auth_token"))
+                    .setTooltip(Text.translatable("tooltip.lan_extender.auth_token"))
                     .setSaveConsumer(value -> {
                         unsavedAuthToken = Optional.of(value);
                     }).build());
