@@ -107,9 +107,14 @@ public class LANExtenderMod implements ModInitializer {
     }
 
     private static void startNgrokClient() {
+        if (!ngrokInstalled) {
+            LOGGER.warn("Ngrok is not installed, publishing LAN servers is not available.");
+            return;
+        }
+
         ngrokToken = loadToken();
         if (!ngrokToken.isPresent()) {
-            LOGGER.debug("No ngrok token found, publishing LAN servers is not available.");
+            LOGGER.warn("No ngrok token found, publishing LAN servers is not available.");
             return;
         }
         if (ngrokClient.isPresent()) {
@@ -138,7 +143,7 @@ public class LANExtenderMod implements ModInitializer {
             throw new IllegalStateException("Already publishing to port " + ngrokPort.get());
         }
         if (!ngrokClient.isPresent()) {
-            throw new IllegalStateException("Auth token not available");
+            throw new IllegalStateException("Ngrok client not ready");
         }
         ngrokPort = Optional.of(port);
         var tunnel = new CreateTunnel.Builder()
