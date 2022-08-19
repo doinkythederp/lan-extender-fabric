@@ -36,10 +36,10 @@ public class IntegratedServerMixin {
             ChatHud chat = this.client.inGameHud.getChatHud();
 
             if (!LANExtenderMod.getNgrokToken().isPresent()) {
-                // TODO: explain how to add an ngrok auth token
                 // Right now you have to put it in the LANExtenderAuthToken.txt config file
                 chat.addMessage(
-                        Text.literal("LAN Extender requires an ngrok authentication token to publish servers."));
+                        Text.literal(
+                                "LAN Extender requires an ngrok authtoken to publish servers. Read the mod's guide for more information."));
                 return;
             }
 
