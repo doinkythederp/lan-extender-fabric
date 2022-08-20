@@ -123,9 +123,12 @@ public class LANExtenderMod implements ModInitializer {
             ngrokClient.get().kill();
         }
 
+        Path ngrokBinaryPath = isWindows() ? ngrokPath.resolveSibling("ngrok.exe") : ngrokPath;
+
         var config = new JavaNgrokConfig.Builder()
                 .withAuthToken(ngrokToken.get())
-                .withNgrokPath(ngrokPath)
+                .withNgrokPath(
+                        ngrokBinaryPath)
                 .build();
         ngrokClient = Optional.of(new NgrokClient.Builder()
                 .withJavaNgrokConfig(config)
@@ -136,6 +139,10 @@ public class LANExtenderMod implements ModInitializer {
             ngrokPort = Optional.empty();
             publishPort(port);
         }
+    }
+
+    public static boolean isWindows() {
+        return System.getProperty("os.name").toLowerCase().contains("win");
     }
 
     public static Tunnel publishPort(int port) throws IllegalStateException {
