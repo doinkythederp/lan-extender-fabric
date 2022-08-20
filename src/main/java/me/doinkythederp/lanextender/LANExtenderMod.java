@@ -2,6 +2,8 @@ package me.doinkythederp.lanextender;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.text.Text;
 
@@ -9,6 +11,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -137,7 +141,15 @@ public class LANExtenderMod implements ModInitializer {
         if (ngrokPort.isPresent()) {
             int port = ngrokPort.get();
             ngrokPort = Optional.empty();
-            publishPort(port);
+            ChatHud chatHud = MinecraftClient.getInstance().inGameHud.getChatHud();
+            try {
+                Tunnel tunnel = publishPort(port);
+                chatHud.addMessage(
+                        Text.literal("Your server is now available @ " + tunnel.getPublicUrl().replace("tcp://", "")));
+            } catch (Exception e) {
+                chatHud.addMessage(Text.translatable("error.lan_extender.failed_to_publish"));
+            }
+
         }
     }
 
@@ -165,7 +177,14 @@ public class LANExtenderMod implements ModInitializer {
             return;
         }
 
-        ngrokClient.get().getTunnels().forEach(tunnel -> {
+        List<Tunnel> tunnels;
+        try {
+            tunnels = ngrokClient.get().getTunnels();
+        } catch (Exception e) {
+            tunnels = new ArrayList<>();
+        }
+
+        tunnels.forEach(tunnel -> {
             LOGGER.debug("Disconnecting tunnel {}", tunnel.getName());
             ngrokClient.get().disconnect(tunnel.getPublicUrl());
         });

@@ -35,7 +35,7 @@ public class IntegratedServerMixin {
             LANExtenderMod.LOGGER.info("Starting ngrok tunnel through {}…", port);
             ChatHud chat = this.client.inGameHud.getChatHud();
 
-            if (!LANExtenderMod.getNgrokToken().isPresent()) {
+            if (!LANExtenderMod.getNgrokToken().isPresent() || LANExtenderMod.getNgrokToken().get().isEmpty()) {
                 // Right now you have to put it in the LANExtenderAuthToken.txt config file
                 chat.addMessage(
                         Text.literal(
@@ -52,7 +52,7 @@ public class IntegratedServerMixin {
                 LANExtenderMod.LOGGER.error(e.getClass().getSimpleName() + ": "
                         + e.getMessage());
                 chat.addMessage(
-                        Text.literal("Failed to publish LAN server. Is your ngrok authtoken valid?"));
+                        Text.translatable("error.lan_extender.failed_to_publish"));
             }
         }
     }
