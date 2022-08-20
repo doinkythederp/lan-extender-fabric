@@ -14,7 +14,7 @@ import net.minecraft.client.gui.screen.OpenToLanScreen;
 import net.minecraft.client.gui.widget.CheckboxWidget;
 
 @Mixin(OpenToLanScreen.class)
-public class OpenToLANScreenMixin {
+public abstract class OpenToLANScreenMixin {
     @Inject(at = @At("TAIL"), method = "init()V")
     private void init(CallbackInfo info) {
         var lanScreen = (ScreenAccessor) (Object) this;
@@ -22,6 +22,11 @@ public class OpenToLANScreenMixin {
         LANExtenderMod.publishCheckbox = Optional.of(
                 new CheckboxWidget((lanScreen.getWidth() - messageWidth) / 2 - 8, 128, messageWidth + 24, 20,
                         LANExtenderMod.checkboxMessage, false));
-        lanScreen.invokeAddDrawableChild(LANExtenderMod.publishCheckbox.get());
+
+        // Alternative to addDrawableChild that doesn't crash in release mode
+        CheckboxWidget checkbox = LANExtenderMod.publishCheckbox.get();
+        lanScreen.getDrawables().add(checkbox);
+        lanScreen.getChildren().add(checkbox);
+        lanScreen.getSelectables().add(checkbox);
     }
 }

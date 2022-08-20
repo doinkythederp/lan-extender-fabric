@@ -21,25 +21,24 @@ repositories {
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	// Fabric API. This is technically optional, but you probably want it anyway.
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-    modImplementation "com.terraformersmc:modmenu:4.0.6"
+    modImplementation "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}"
 
 	// Uncomment the following line to enable the deprecated Fabric API modules.
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
-    implementation "com.github.alexdlaird:java-ngrok:1.5.6"
+    implementation "com.github.alexdlaird:java-ngrok:${project.ngrok_version}"
 
-    modApi("me.shedaniel.cloth:cloth-config-fabric:8.0.75") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
+    // java-ngrok and dependecies should be included in the mod jar
+    include "com.github.alexdlaird:java-ngrok:${project.ngrok_version}"
+    include "com.google.code.gson:gson:${project.gson_version}"
+    include "org.yaml:snakeyaml:${project.snakeyaml_version}"
 }
 
 processResources {
