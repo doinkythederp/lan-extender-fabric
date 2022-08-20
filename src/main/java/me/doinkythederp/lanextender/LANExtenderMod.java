@@ -154,6 +154,10 @@ public class LANExtenderMod implements ModInitializer {
     }
 
     public static void disconnectTunnel() {
+        if (!ngrokClient.isPresent()) {
+            return;
+        }
+
         ngrokClient.get().getTunnels().forEach(tunnel -> {
             LOGGER.debug("Disconnecting tunnel {}", tunnel.getName());
             ngrokClient.get().disconnect(tunnel.getPublicUrl());
