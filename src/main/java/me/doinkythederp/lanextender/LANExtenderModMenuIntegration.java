@@ -27,7 +27,7 @@ public class LANExtenderModMenuIntegration implements ModMenuApi {
             general.addEntry(builder.entryBuilder()
                     .startStrField(Text.translatable("option.lan_extender.auth_token"),
                             LANExtenderMod.getNgrokToken().orElse(""))
-                    .setDefaultValue("todo: change to something useful")
+                    .setDefaultValue("")
                     .setTooltip(Text.translatable("tooltip.lan_extender.auth_token"))
                     .setSaveConsumer(value -> {
                         unsavedAuthToken = Optional.of(value);
