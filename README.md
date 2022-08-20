@@ -4,7 +4,7 @@ LAN Extender generates a server address when you start your LAN worlds that lets
 
 ## Installation
 
-LAN Extender is a [**Fabric**](https://fabricmc.net) mod. Put the LAN Extender jar-file in the `mods` folder in your game directory. [**Mod Menu**](https://www.curseforge.com/minecraft/mc-mods/modmenu) is strongly recommended but technichally not required for configuration.
+LAN Extender is a [**Fabric**](https://fabricmc.net) mod. Put the LAN Extender jar-file in the `mods` folder in your game directory. You must have [**Mod Menu**](https://www.curseforge.com/minecraft/mc-mods/modmenu), [**Fabric API**](https://www.curseforge.com/minecraft/mc-mods/fabric-api), and [**Cloth Config API**](https://www.curseforge.com/minecraft/mc-mods/cloth-config) (make sure to download the fabric version) installed alongside LAN Extender.
 
 ## Setup
 
