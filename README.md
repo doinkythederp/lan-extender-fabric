@@ -1,5 +1,8 @@
 # LAN Extender: The world connector
 
+![LAN Extender: Turn your LAN worlds into fully-fledged servers, for free.](assets/lan-extender-banner-white.png#gh-light-mode-only)
+![LAN Extender: Turn your LAN worlds into fully-fledged servers, for free.](assets/lan-extender-banner-black.png#gh-dark-mode-only)
+
 LAN Extender generates a server address when you start your LAN worlds that lets others connect – even if they're connected to a different router!
 
 ## Installation
