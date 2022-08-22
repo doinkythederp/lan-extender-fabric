@@ -3,7 +3,7 @@
     "id": "lan_extender",
     "version": "${version}",
     "name": "LAN Extender",
-    "description": "Generates a server address when you start your LAN worlds that lets others connect – even if they're connected to a different router!",
+    "description": "Turn your LAN worlds into fully-fledged servers, for free.",
     "authors": [
         "doinkythederp"
     ],
