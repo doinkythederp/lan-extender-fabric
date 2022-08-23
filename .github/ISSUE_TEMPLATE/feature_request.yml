@@ -1,0 +1,38 @@
+name: Feature request
+description: Request a new feature or enhancement for the mod
+labels: [feature, needs triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use the Discussions tab if you have a question or need help.
+  - type: textarea
+    id: description
+    attributes:
+      label: Explain the feature
+      description: |
+        A clear and concise description of what the problem is, or what feature you want to be implemented.
+      placeholder: I'm always frustrated when…, Minecraft has recently addded…, I wish I was able to…
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Ideal solution or implementation
+      description: A clear and concise description of what you want to happen.
+      placeholder: This problem could be fixed by…
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: '[Optional] Alternative solutions or implementations'
+      description: A clear and concise description of any alternative solutions or features you have considered.
+      placeholder: If the first suggestion isn't possible, an alternative would be to…
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: '[Optional] Other context'
+      description: |
+        Any other context, screenshots, or file uploads that help us understand your feature request.
+        Tip: Upload screenshots or other files by clicking this area to highlight it and then dragging files into it.
