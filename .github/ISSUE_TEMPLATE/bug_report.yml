@@ -1,0 +1,79 @@
+name: Bug report
+description: Report incorrect or unexpected behavior
+labels: [bug, need repro]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use the Discussions tab if you have a question or need help.
+  - type: textarea
+    id: description
+    attributes:
+      label: Issue description
+      description: |
+        Describe the bug in as much detail as possible. What is the most straightforward way to cause it?
+
+        Tip: Upload screenshots of the bug and/or a copy of your game log file by clicking this area to highlight it and then dragging files into it.
+      placeholder: |
+        Steps to cause the issue:
+        1. do thing
+        2. click button
+        3. watch how x happens instead of y
+        4. see `latest.log`, attached below
+    validations:
+      required: true
+  - type: input
+    id: mod-version
+    attributes:
+      label: LAN Extender version
+      description: Which version of LAN Extender are you using? Check the mod's file name (e.g. 1.2.3 for `lan-extender-fabric-mc1.19-1.2.3.jar`) or use Mod Menu to find your version.
+      placeholder: Please do not submit bug reports for outdated versions of the mod.
+    validations:
+      required: true
+  - type: input
+    id: mc-version
+    attributes:
+      label: Minecraft version
+      description: |
+        Which version of Minecraft are you running the mod on? (e.g. 1.19.2)
+      placeholder: Minecraft versions 1.18.x and below aren't currently supported.
+    validations:
+      required: true
+  - type: textarea
+    id: mod-list
+    attributes:
+      label: What other mods do you have installed?
+      description: |
+        Check your mods folder for the full list of mods.
+      placeholder: |
+        - Fabric API v1.2.3
+        - Cloth Config API v1.2.3
+        - Mod Menu v1.2.3
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      description: Which OS are you running Minecraft on?
+      placeholder: macOS, Linux (include distro), Windows
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority this issue should have
+      description: Please be realistic. If you need to elaborate on your reasoning, please use the Issue description field above.
+      options:
+        - Low, slightly annoying (e.g. typo, confusing text)
+        - Medium, should be fixed soon
+        - High, immediate attention needed (e.g. game crash, mod not working)
+    validations:
+      required: true
+  - type: checkboxes
+    id: more-info
+    attributes:
+      label: Are all of the following true?
+      description: |
+        If you choose not to check one of the boxes, explain why in the issue description above.
+      options:
+        - label: I have followed the setup guide for the mod.
+        - label: LAN Extender is configured with my Ngrok Authtoken.
