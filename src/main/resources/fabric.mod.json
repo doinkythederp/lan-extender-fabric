@@ -31,10 +31,13 @@
         "fabric": "*",
         "minecraft": "~1.19",
         "java": ">=17",
-        "cloth-config": "8.x"
+        "cloth-config": [
+            "7.x",
+            "8.x"
+        ]
     },
     "suggests": {
-        "modmenu": ">=4.0.6"
+        "modmenu": ">=4.0.3"
     },
     "accessWidener": "lan_extender.accesswidener"
 }
