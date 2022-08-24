@@ -32,11 +32,11 @@ public class LANExtenderMod implements ModInitializer {
 
     public static final Text checkboxMessage = Text.translatable("lanServer.publish");
     public static Optional<CheckboxWidget> publishCheckbox = Optional.empty();
-
+    public static MinecraftClient client = MinecraftClient.getInstance();
     public static boolean ngrokInstalled = false;
+
     private static Path ngrokPath;
     private static Path configPath;
-
     private static Optional<NgrokClient> ngrokClient = Optional.empty();
     private static Optional<Integer> ngrokPort = Optional.empty();
     private static Optional<String> ngrokToken = Optional.empty();
@@ -49,6 +49,8 @@ public class LANExtenderMod implements ModInitializer {
 
         ngrokPath = FabricLoader.getInstance().getGameDir().resolve("lan_extender").resolve("ngrok");
         configPath = FabricLoader.getInstance().getConfigDir().resolve("LANExtenderAuthToken.txt");
+
+        ngrokToken = loadToken();
 
         if (ngrokPath.toFile().exists()) {
             ngrokInstalled = true;
@@ -116,7 +118,6 @@ public class LANExtenderMod implements ModInitializer {
             return;
         }
 
-        ngrokToken = loadToken();
         if (!ngrokToken.isPresent()) {
             LOGGER.warn("No ngrok token found, publishing LAN servers is not available.");
             return;
@@ -141,7 +142,7 @@ public class LANExtenderMod implements ModInitializer {
         if (ngrokPort.isPresent()) {
             int port = ngrokPort.get();
             ngrokPort = Optional.empty();
-            ChatHud chatHud = MinecraftClient.getInstance().inGameHud.getChatHud();
+            ChatHud chatHud = client.inGameHud.getChatHud();
             try {
                 Tunnel tunnel = publishPort(port);
                 chatHud.addMessage(
