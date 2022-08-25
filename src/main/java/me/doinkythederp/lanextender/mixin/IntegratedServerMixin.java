@@ -7,7 +7,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import com.github.alexdlaird.ngrok.protocol.Tunnel;
+
 import me.doinkythederp.lanextender.LANExtenderMod;
+import me.doinkythederp.lanextender.WorldPublisher;
 import me.doinkythederp.lanextender.config.LANExtenderConfig;
 
 import org.spongepowered.asm.mixin.injection.At;
@@ -31,36 +34,24 @@ public class IntegratedServerMixin {
         // B. the user might have not checked the "yes, publish server" checkbox on the
         // LAN screen
         if (LANExtenderMod.lanServersShouldPublish()) {
-            LANExtenderMod.LOGGER.info("Starting ngrok tunnel through {}…", port);
-            final ChatHud chat = this.client.inGameHud.getChatHud();
-            final var config = LANExtenderConfig.getInstance();
-
-            if (config.authToken.isEmpty()) {
-                chat.addMessage(
-                        Text.literal(
-                                "LAN Extender requires an ngrok authtoken to publish servers. Read the mod's guide for more information."));
-                return;
-            }
-            // TODO
-            /*
-             * try {
-             * Tunnel tunnel = LANExtenderMod.publishPort(port);
-             * chat.addMessage(Text
-             * .literal("Your server is joinable @ "
-             * + tunnel.getPublicUrl().replace("tcp://", "")));
-             * } catch (Exception e) {
-             * LANExtenderMod.LOGGER.error(e.getClass().getSimpleName() + ": "
-             * + e.getMessage());
-             * chat.addMessage(
-             * Text.translatable("error.lan_extender.failed_to_publish"));
-             * }
-             */
+            new Thread(() -> {
+                final ChatHud chat = this.client.inGameHud.getChatHud();
+                try {
+                    Tunnel tunnel = LANExtenderMod.publisher.publishPort(port);
+                    chat.addMessage(
+                            Text.translatable("message.lan_extender.world_published",
+                                    WorldPublisher.getTunnelAddress(tunnel)));
+                } catch (Exception e) {
+                    LANExtenderMod.LOGGER.error("Failed to publish port: {}", e);
+                    chat.addMessage(
+                            Text.translatable("error.lan_extender.failed_to_publish"));
+                }
+            }, "LAN-Extender-Publisher").start();
         }
     }
 
     @Inject(at = @At("RETURN"), method = "stop")
     private void afterStop(boolean joinServerThread, CallbackInfo info) {
-        // TODO
-        /* LANExtenderMod.disconnectTunnel(); */
+        LANExtenderMod.publisher.closePort();
     }
 }
