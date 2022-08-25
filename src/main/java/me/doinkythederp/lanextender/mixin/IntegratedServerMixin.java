@@ -42,7 +42,7 @@ public class IntegratedServerMixin {
                             Text.translatable("message.lan_extender.world_published",
                                     WorldPublisher.getTunnelAddress(tunnel)));
                 } catch (Exception e) {
-                    LANExtenderMod.LOGGER.error("Failed to publish port: {}", e);
+                    LANExtenderMod.LOGGER.error("Failed to publish port:", e);
                     chat.addMessage(
                             Text.translatable("error.lan_extender.failed_to_publish"));
                 }

@@ -29,6 +29,7 @@ public class WorldPublisher {
     private Optional<Integer> publishedPort = Optional.empty();
 
     public void restartClient(String authToken) {
+        LOGGER.info("Starting ngrok client");
         this.installNgrokIfNeeded();
 
         if (ngrokClient.isPresent()) {

@@ -34,7 +34,6 @@ public class LANExtenderConfig {
         LOGGER.info("Loading configuration file");
 
         try {
-            // TODO: fall back to LANExtenderAuthToken.txt
             Optional<LANExtenderConfig> config = readConfig();
             if (config.isPresent()) {
                 CONFIG_INSTANCE = config;
