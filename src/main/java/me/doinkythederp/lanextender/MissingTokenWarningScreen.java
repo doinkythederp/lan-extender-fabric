@@ -1,5 +1,6 @@
 package me.doinkythederp.lanextender;
 
+import me.doinkythederp.lanextender.config.LANExtenderConfig;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ContactInformation;
 import net.minecraft.client.gui.screen.Screen;
@@ -14,7 +15,8 @@ public class MissingTokenWarningScreen extends WarningScreen {
     private static boolean warningHasBeenShown = false;
 
     public static boolean shouldSkipWarningCheck() {
-        return warningHasBeenShown /* || options.skipMissingTokenWarning */;
+        var config = LANExtenderConfig.getInstance();
+        return warningHasBeenShown || config.hideAuthTokenMissingWarning;
     }
 
     private static final Text HEADER = Text.translatable("warning.lan_extender.missing_authtoken.header")
@@ -43,8 +45,9 @@ public class MissingTokenWarningScreen extends WarningScreen {
         this.addDrawableChild(new ButtonWidget(this.width / 2 - 155 + 160, 100 + yOffset, 150, 20, ScreenTexts.PROCEED,
                 buttonWidget -> {
                     if (this.checkbox.isChecked()) {
-                        // this.client.options.skipMultiplayerWarning = true;
-                        // this.client.options.write();
+                        var config = LANExtenderConfig.getInstance();
+                        config.hideAuthTokenMissingWarning = true;
+                        LANExtenderConfig.saveConfig();
                     }
                     warningHasBeenShown = true;
                     this.client.setScreen(this.parent);
