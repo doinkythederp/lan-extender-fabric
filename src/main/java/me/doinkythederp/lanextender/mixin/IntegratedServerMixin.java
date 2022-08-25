@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.github.alexdlaird.ngrok.protocol.Tunnel;
 
 import me.doinkythederp.lanextender.LANExtenderMod;
+import me.doinkythederp.lanextender.config.LANExtenderConfig;
 
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -33,10 +34,10 @@ public class IntegratedServerMixin {
         // LAN screen
         if (LANExtenderMod.lanServersShouldPublish()) {
             LANExtenderMod.LOGGER.info("Starting ngrok tunnel through {}…", port);
-            ChatHud chat = this.client.inGameHud.getChatHud();
+            final ChatHud chat = this.client.inGameHud.getChatHud();
+            final var config = LANExtenderConfig.getInstance();
 
-            if (!LANExtenderMod.getNgrokToken().isPresent() || LANExtenderMod.getNgrokToken().get().isEmpty()) {
-                // Right now you have to put it in the LANExtenderAuthToken.txt config file
+            if (config.authToken.isEmpty()) {
                 chat.addMessage(
                         Text.literal(
                                 "LAN Extender requires an ngrok authtoken to publish servers. Read the mod's guide for more information."));

@@ -20,7 +20,7 @@
             "me.doinkythederp.lanextender.LANExtenderMod"
         ],
         "modmenu": [
-            "me.doinkythederp.lanextender.LANExtenderModMenuIntegration"
+            "me.doinkythederp.lanextender.config.LANExtenderModMenuIntegration"
         ]
     },
     "mixins": [

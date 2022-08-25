@@ -7,9 +7,6 @@ import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.text.Text;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,22 +21,21 @@ import com.github.alexdlaird.ngrok.protocol.CreateTunnel;
 import com.github.alexdlaird.ngrok.protocol.Proto;
 import com.github.alexdlaird.ngrok.protocol.Tunnel;
 
+import me.doinkythederp.lanextender.config.LANExtenderConfig;
+
 public class LANExtenderMod implements ModInitializer {
     // This logger is used to write text to the console and the log file.
     // It is considered best practice to use your mod id as the logger's name.
     // That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("lan_extender");
-
     public static final Text checkboxMessage = Text.translatable("lanServer.publish");
     public static Optional<CheckboxWidget> publishCheckbox = Optional.empty();
     public static MinecraftClient client = MinecraftClient.getInstance();
     public static boolean ngrokInstalled = false;
 
     private static Path ngrokPath;
-    private static Path configPath;
     private static Optional<NgrokClient> ngrokClient = Optional.empty();
     private static Optional<Integer> ngrokPort = Optional.empty();
-    private static Optional<String> ngrokToken = Optional.empty();
 
     @Override
     public void onInitialize() {
@@ -48,9 +44,8 @@ public class LANExtenderMod implements ModInitializer {
         // Proceed with mild caution.
 
         ngrokPath = FabricLoader.getInstance().getGameDir().resolve("lan_extender").resolve("ngrok");
-        configPath = FabricLoader.getInstance().getConfigDir().resolve("LANExtenderAuthToken.txt");
 
-        ngrokToken = loadToken();
+        LANExtenderConfig.loadConfig();
 
         if (ngrokPath.toFile().exists()) {
             ngrokInstalled = true;
@@ -72,53 +67,14 @@ public class LANExtenderMod implements ModInitializer {
         }
     }
 
-    private static Optional<String> loadToken() {
-        String relativeConfigPathString = FabricLoader.getInstance().getGameDir().relativize(configPath).toString();
-        if (configPath.toFile().exists()) {
-            try {
-                BufferedReader br = new BufferedReader(new FileReader(configPath.toString()));
-                try {
-                    LOGGER.debug("Loaded token from config file @ {}", relativeConfigPathString);
-                    return Optional.of(br.readLine());
-                } finally {
-                    br.close();
-                }
-            } catch (Exception e) {
-                LOGGER.error("Failed to read config file: {}", e.getMessage());
-                return Optional.empty();
-            }
-        }
-        LOGGER.warn("Config file not present @ {}", relativeConfigPathString);
-        return Optional.empty();
-    }
-
-    public static Optional<String> getNgrokToken() {
-        return ngrokToken;
-    }
-
-    public static void setNgrokToken(String ngrokToken) {
-        try {
-            var writer = new FileWriter(configPath.toString());
-            try {
-                writer.write(ngrokToken);
-                writer.write(System.lineSeparator());
-            } finally {
-                writer.close();
-            }
-        } catch (Exception e) {
-            LOGGER.error("Failed to write config file: {}", e.getMessage());
-        }
-        LANExtenderMod.ngrokToken = Optional.of(ngrokToken);
-        startNgrokClient();
-    }
-
     private static void startNgrokClient() {
         if (!ngrokInstalled) {
             LOGGER.warn("Ngrok is not installed, publishing LAN servers is not available.");
             return;
         }
 
-        if (!ngrokToken.isPresent()) {
+        final String ngrokToken = LANExtenderConfig.getInstance().authToken;
+        if (ngrokToken.isEmpty()) {
             LOGGER.warn("No ngrok token found, publishing LAN servers is not available.");
             return;
         }
@@ -131,7 +87,7 @@ public class LANExtenderMod implements ModInitializer {
         Path ngrokBinaryPath = isWindows() ? ngrokPath.resolveSibling("ngrok.exe") : ngrokPath;
 
         var config = new JavaNgrokConfig.Builder()
-                .withAuthToken(ngrokToken.get())
+                .withAuthToken(ngrokToken)
                 .withNgrokPath(
                         ngrokBinaryPath)
                 .build();

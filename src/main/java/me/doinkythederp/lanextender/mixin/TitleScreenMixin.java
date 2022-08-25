@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import me.doinkythederp.lanextender.LANExtenderMod;
 import me.doinkythederp.lanextender.MissingTokenWarningScreen;
+import me.doinkythederp.lanextender.config.LANExtenderConfig;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,7 +19,7 @@ public class TitleScreenMixin {
             return;
         }
 
-        if (LANExtenderMod.getNgrokToken().orElse("").isEmpty()) {
+        if (LANExtenderConfig.getInstance().authToken.isEmpty()) {
             LANExtenderMod.client.setScreen(new MissingTokenWarningScreen((TitleScreen) (Object) this));
         }
     }
