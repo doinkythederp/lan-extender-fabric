@@ -25,7 +25,7 @@ Please note that the authtoken pictured in this guide will not work if you try t
 
 ## Usage
 
-Once you're in the world you want others to be able to join, click Open to LAN in the game menu and click the checkbox to allow people connected to a different router to join.
+Once you're in the world you want others to be able to join, click Open to LAN in the game menu and click the checkbox to allow people connected to a different router to join. **If the checkbox is missing, you need to follow the setup guide.**
 
 ![Click the checkbox](assets/open_to_lan.png)
 ![View the address in chat](assets/opened_to_lan.png)
