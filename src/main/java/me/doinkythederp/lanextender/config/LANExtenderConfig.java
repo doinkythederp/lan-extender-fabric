@@ -16,6 +16,7 @@ import static me.doinkythederp.lanextender.LANExtenderMod.LOGGER;
 
 public class LANExtenderConfig {
     private static final Path CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("LANExtenderConfig.json");
+    private static final Path OLD_CONFIG_PATH = CONFIG_PATH.resolveSibling("LANExtenderAuthToken.txt");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static Optional<LANExtenderConfig> CONFIG_INSTANCE;
 
@@ -41,6 +42,15 @@ public class LANExtenderConfig {
             }
 
             CONFIG_INSTANCE = Optional.of(new LANExtenderConfig());
+
+            Optional<String> oldConfig = readOldConfig();
+            if (oldConfig.isPresent()) {
+                if (CONFIG_INSTANCE.get().authToken.isEmpty()) {
+                    CONFIG_INSTANCE.get().authToken = oldConfig.get();
+                }
+                Files.deleteIfExists(OLD_CONFIG_PATH);
+            }
+
             writeConfig(CONFIG_INSTANCE.get());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -58,6 +68,19 @@ public class LANExtenderConfig {
             writeConfig(CONFIG_INSTANCE.get());
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static Optional<String> readOldConfig() throws IOException {
+        if (!Files.isRegularFile(OLD_CONFIG_PATH)) {
+            return Optional.empty();
+        }
+
+        try (BufferedReader br = Files.newBufferedReader(OLD_CONFIG_PATH)) {
+            return Optional.of(br.readLine());
+        } catch (IOException e) {
+            LOGGER.warn("Failed to parse authtoken file");
+            return Optional.empty();
         }
     }
 
