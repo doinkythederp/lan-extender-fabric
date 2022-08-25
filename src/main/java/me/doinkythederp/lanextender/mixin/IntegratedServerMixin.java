@@ -7,8 +7,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.github.alexdlaird.ngrok.protocol.Tunnel;
-
 import me.doinkythederp.lanextender.LANExtenderMod;
 import me.doinkythederp.lanextender.config.LANExtenderConfig;
 
@@ -43,23 +41,26 @@ public class IntegratedServerMixin {
                                 "LAN Extender requires an ngrok authtoken to publish servers. Read the mod's guide for more information."));
                 return;
             }
-
-            try {
-                Tunnel tunnel = LANExtenderMod.publishPort(port);
-                chat.addMessage(Text
-                        .literal("Your server is joinable @ "
-                                + tunnel.getPublicUrl().replace("tcp://", "")));
-            } catch (Exception e) {
-                LANExtenderMod.LOGGER.error(e.getClass().getSimpleName() + ": "
-                        + e.getMessage());
-                chat.addMessage(
-                        Text.translatable("error.lan_extender.failed_to_publish"));
-            }
+            // TODO
+            /*
+             * try {
+             * Tunnel tunnel = LANExtenderMod.publishPort(port);
+             * chat.addMessage(Text
+             * .literal("Your server is joinable @ "
+             * + tunnel.getPublicUrl().replace("tcp://", "")));
+             * } catch (Exception e) {
+             * LANExtenderMod.LOGGER.error(e.getClass().getSimpleName() + ": "
+             * + e.getMessage());
+             * chat.addMessage(
+             * Text.translatable("error.lan_extender.failed_to_publish"));
+             * }
+             */
         }
     }
 
     @Inject(at = @At("RETURN"), method = "stop")
     private void afterStop(boolean joinServerThread, CallbackInfo info) {
-        LANExtenderMod.disconnectTunnel();
+        // TODO
+        /* LANExtenderMod.disconnectTunnel(); */
     }
 }
