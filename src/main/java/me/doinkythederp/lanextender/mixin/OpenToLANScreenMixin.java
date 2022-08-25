@@ -17,6 +17,10 @@ import net.minecraft.client.gui.widget.CheckboxWidget;
 public abstract class OpenToLANScreenMixin {
     @Inject(at = @At("TAIL"), method = "init()V")
     private void init(CallbackInfo info) {
+        if (!LANExtenderMod.publisher.isReadyToPublish()) {
+            return;
+        }
+
         var lanScreen = (ScreenAccessor) (Object) this;
         int messageWidth = lanScreen.getTextRenderer().getWidth(LANExtenderMod.checkboxMessage);
         LANExtenderMod.publishCheckbox = Optional.of(
