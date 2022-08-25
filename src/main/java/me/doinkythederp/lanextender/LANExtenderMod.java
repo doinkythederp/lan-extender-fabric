@@ -7,9 +7,6 @@ import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.text.Text;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +29,8 @@ public class LANExtenderMod implements ModInitializer {
     // That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("lan_extender");
     public static final Text checkboxMessage = Text.translatable("lanServer.publish");
-
     public static Optional<CheckboxWidget> publishCheckbox = Optional.empty();
+    public static MinecraftClient client = MinecraftClient.getInstance();
     public static boolean ngrokInstalled = false;
 
     private static Path ngrokPath;
@@ -101,7 +98,7 @@ public class LANExtenderMod implements ModInitializer {
         if (ngrokPort.isPresent()) {
             int port = ngrokPort.get();
             ngrokPort = Optional.empty();
-            ChatHud chatHud = MinecraftClient.getInstance().inGameHud.getChatHud();
+            ChatHud chatHud = client.inGameHud.getChatHud();
             try {
                 Tunnel tunnel = publishPort(port);
                 chatHud.addMessage(

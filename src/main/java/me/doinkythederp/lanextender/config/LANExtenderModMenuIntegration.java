@@ -5,9 +5,6 @@ import java.util.Optional;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 
-import me.doinkythederp.lanextender.LANExtenderMod;
-import me.doinkythederp.lanextender.config.LANExtenderConfig;
-
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import net.minecraft.text.Text;
