@@ -11,7 +11,7 @@ LAN Extender is a [**Fabric**](https://fabricmc.net) mod. Put the LAN Extender j
 
 ## Setup
 
-LAN Extender requires an [**ngrok**](https://ngrok.com) account to function. [**Click here**](https://dashboard.ngrok.com/signup) to sign up. After you sign up, ngrok will send you an email asking you to verify your email address. I'd recommend doing this, but it's not neccesary for the mod to work. After you've logged in, you should see the page pictured below. **Click on "Your Authtoken"** – there is no need to download or install ngrok.
+LAN Extender requires an **ngrok** account to function. [**Click here**](https://dashboard.ngrok.com/signup) to sign up. After you sign up, ngrok will send you an email asking you to verify your email address. I'd recommend doing this, but it's not neccesary for the mod to work. After you've logged in, you should see the page pictured below. **Click on "Your Authtoken"** – there is no need to download or install ngrok.
 
 ![Use the sidebar to access your authtoken](assets/after_ngrok_login.png)
 
