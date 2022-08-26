@@ -6,7 +6,7 @@ import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.doinkythederp.lanextender.LANExtenderMod;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
-import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 
 public class LANExtenderModMenuIntegration implements ModMenuApi {
     @Override
@@ -15,17 +15,19 @@ public class LANExtenderModMenuIntegration implements ModMenuApi {
             final var config = LANExtenderConfig.getInstance();
             ConfigBuilder builder = ConfigBuilder.create()
                     .setParentScreen(parent)
-                    .setTitle(Text.translatable("title.lan_extender.config"))
+                    .setTitle(new TranslatableText("title.lan_extender.config"))
                     .setSavingRunnable(() -> {
                         LANExtenderConfig.saveConfig();
                         LANExtenderMod.publisher.restartClient(config.authToken);
                     });
-            ConfigCategory general = builder.getOrCreateCategory(Text.translatable("category.lan_extender.general"));
+            ConfigCategory general = builder.getOrCreateCategory(new TranslatableText("category.lan_extender.general"));
             general.addEntry(builder.entryBuilder()
-                    .startStrField(Text.translatable("option.lan_extender.auth_token"),
+                    .startStrField(
+                            new TranslatableText("option.lan_extender.auth_token"),
                             config.authToken)
                     .setDefaultValue("")
-                    .setTooltip(Text.translatable("tooltip.lan_extender.auth_token"))
+                    .setTooltip(
+                            new TranslatableText("tooltip.lan_extender.auth_token"))
                     .setSaveConsumer(value -> {
                         config.authToken = value;
                     }).build());

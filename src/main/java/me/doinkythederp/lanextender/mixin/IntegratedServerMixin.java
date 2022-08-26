@@ -11,14 +11,13 @@ import com.github.alexdlaird.ngrok.protocol.Tunnel;
 
 import me.doinkythederp.lanextender.LANExtenderMod;
 import me.doinkythederp.lanextender.WorldPublisher;
-import me.doinkythederp.lanextender.config.LANExtenderConfig;
 
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.server.integrated.IntegratedServer;
-import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.world.GameMode;
 
 @Mixin(IntegratedServer.class)
@@ -39,12 +38,12 @@ public class IntegratedServerMixin {
                 try {
                     Tunnel tunnel = LANExtenderMod.publisher.publishPort(port);
                     chat.addMessage(
-                            Text.translatable("message.lan_extender.world_published",
+                            new TranslatableText("message.lan_extender.world_published",
                                     WorldPublisher.getTunnelAddress(tunnel)));
                 } catch (Exception e) {
                     LANExtenderMod.LOGGER.error("Failed to publish port:", e);
                     chat.addMessage(
-                            Text.translatable("error.lan_extender.failed_to_publish"));
+                            new TranslatableText("error.lan_extender.failed_to_publish"));
                 }
             }, "LAN-Extender-Publisher").start();
         }

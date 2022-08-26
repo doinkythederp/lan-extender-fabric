@@ -11,7 +11,7 @@ import com.github.alexdlaird.ngrok.protocol.Proto;
 import com.github.alexdlaird.ngrok.protocol.Tunnel;
 
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 
 import static me.doinkythederp.lanextender.LANExtenderMod.LOGGER;
 
@@ -52,7 +52,7 @@ public class WorldPublisher {
             try {
                 Tunnel tunnel = this.publishPort(port);
                 LANExtenderMod.client.inGameHud.getChatHud().addMessage(
-                        Text.translatable("message.lan_extender.address_changed", getTunnelAddress(tunnel)));
+                        new TranslatableText("message.lan_extender.address_changed", getTunnelAddress(tunnel)));
             } catch (Exception e) {
                 LOGGER.error("Failed to re-publish port {}: {}", port, e);
             }
