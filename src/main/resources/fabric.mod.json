@@ -29,15 +29,14 @@
     "depends": {
         "fabricloader": ">=0.14.6",
         "fabric": "*",
-        "minecraft": "~1.19",
+        "minecraft": "~1.18",
         "java": ">=17",
         "cloth-config": [
-            "7.x",
-            "8.x"
+            "6.x"
         ]
     },
     "suggests": {
-        "modmenu": ">=4.0.3"
+        "modmenu": "3.x"
     },
     "accessWidener": "lan_extender.accesswidener"
 }
