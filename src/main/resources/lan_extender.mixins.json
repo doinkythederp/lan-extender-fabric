@@ -8,8 +8,7 @@
         "OpenToLANScreenMixin",
         "ScreenAccessor",
         "IntegratedServerMixin",
-        "MinecraftClientMixin",
-        "TitleScreenMixin"
+        "MinecraftClientMixin"
     ],
     "injectors": {
         "defaultRequire": 1

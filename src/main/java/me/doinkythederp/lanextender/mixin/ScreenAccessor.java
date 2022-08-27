@@ -6,10 +6,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
-import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.AbstractButtonWidget;
 
 @Mixin(Screen.class)
 public interface ScreenAccessor {
@@ -19,15 +18,12 @@ public interface ScreenAccessor {
     @Accessor
     public int getWidth();
 
-    // addDrawableChild appears to crash outside of development mode so the
-    // alternative is to use add the element to all 3 of the following lists
+    @Accessor
+    public int getHeight();
 
     @Accessor
-    List<Drawable> getDrawables();
+    List<AbstractButtonWidget> getButtons();
 
     @Accessor
     List<Element> getChildren();
-
-    @Accessor
-    List<Selectable> getSelectables();
 }

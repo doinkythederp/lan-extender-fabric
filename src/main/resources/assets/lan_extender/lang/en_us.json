@@ -5,9 +5,10 @@
     "tooltip.lan_extender.auth_token": "Get this from \"Your Authtoken\" at www.ngrok.com",
     "error.lan_extender.failed_to_publish": "Failed to publish your world. Please verify that your ngrok authtoken is correct.",
     "warning.lan_extender.missing_authtoken.header": "LAN Extender has not been set up",
-    "warning.lan_extender.missing_authtoken.message": "You will not be able to share your LAN worlds to the Internet until you connect LAN Extender to your Ngrok account. To read the setup guide, click Learn More.",
+    "warning.lan_extender.missing_authtoken.message": "You will not be able to share your LAN worlds to the Internet until you connect LAN Extender to your Ngrok account. To configure the mod, click \"LAN Extender\" on the next screen.",
     "warning.lan_extender.missing_authtoken.check": "Do not show this screen again",
     "warning.lan_extender.missing_authtoken.setup_guide": "Learn More…",
     "message.lan_extender.address_changed": "Your world's address has been changed to %s",
-    "message.lan_extender.world_published": "Your world has been published! Join it @ %s"
+    "message.lan_extender.world_published": "Your world has been published! Join it @ %s",
+    "button.lan_extender.config": "LAN Extender"
 }
