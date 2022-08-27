@@ -62,7 +62,7 @@ public class MissingTokenWarningScreen extends Screen {
                         LANExtenderConfig.saveConfig();
                     }
                     warningHasBeenShown = true;
-                    this.client.setScreen(this.parent);
+                    this.client.openScreen(this.parent);
                 }));
     }
 

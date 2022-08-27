@@ -20,7 +20,7 @@ public class TitleScreenMixin {
         }
 
         if (LANExtenderConfig.getInstance().authToken.isEmpty()) {
-            LANExtenderMod.client.setScreen(new MissingTokenWarningScreen((TitleScreen) (Object) this));
+            LANExtenderMod.client.openScreen(new MissingTokenWarningScreen((TitleScreen) (Object) this));
         }
     }
 }

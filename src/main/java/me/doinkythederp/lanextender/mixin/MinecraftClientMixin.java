@@ -14,7 +14,7 @@ import net.minecraft.client.MinecraftClient;
 
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {
-    @Inject(at = @At("HEAD"), method = "setScreen")
+    @Inject(at = @At("HEAD"), method = "openScreen")
     private void clearLANScreenCheckbox(@Nullable net.minecraft.client.gui.screen.Screen screen, CallbackInfo info) {
         if (screen != null && LANExtenderMod.publishCheckbox.isPresent()) {
             // Checkbox state should not persist after closing the Open To LAN screen.
