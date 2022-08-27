@@ -15,30 +15,16 @@ import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Util;
 
-public class MissingTokenWarningScreen extends Screen {
-    private static boolean warningHasBeenShown = false;
-
-    public static boolean shouldSkipWarningCheck() {
-        LANExtenderConfig config = LANExtenderConfig.getInstance();
-        return warningHasBeenShown || config.hideAuthTokenMissingWarning;
-    }
-
-    private static final Text HEADER = new TranslatableText("warning.lan_extender.missing_authtoken.header")
+public class RestartGameScreen extends Screen {
+    private static final Text HEADER = new TranslatableText("title.lan_extender.restart_game.header")
             .formatted(Formatting.BOLD);
-    private static final Text MESSAGE = new TranslatableText("warning.lan_extender.missing_authtoken.message");
-    private static final Text CHECK_MESSAGE = new TranslatableText("warning.lan_extender.missing_authtoken.check");
-    private static final Text SETUP_GUIDE = new TranslatableText("warning.lan_extender.missing_authtoken.setup_guide");
+    private static final Text MESSAGE = new TranslatableText("info.lan_extender.restart_game.message");
     private static final Text NARRATED_TEXT = HEADER.shallowCopy().append("\n").append(MESSAGE);
     private final Screen parent;
-    private CheckboxWidget checkbox;
     // private MultilineText textMessage = MultilineText.EMPTY;
     private class_5489 textMessage = class_5489.field_26528;
 
-    private static final ContactInformation contactInfo = FabricLoader.getInstance()
-            .getModContainer("lan_extender").get()
-            .getMetadata().getContact();
-
-    public MissingTokenWarningScreen(Screen parent) {
+    public RestartGameScreen(Screen parent) {
         super(NarratorManager.EMPTY);
         this.parent = parent;
     }
@@ -51,21 +37,13 @@ public class MissingTokenWarningScreen extends Screen {
         // int yOffset = (this.textMessage.count() + ...
         int yOffset = (this.textMessage.method_30887() + 1) * this.textRenderer.fontHeight * 2;
 
-        this.checkbox = this.addButton(
-                new CheckboxWidget(this.width / 2 - 155 + 80, 76 + yOffset, 150, 20, CHECK_MESSAGE, false));
-        this.addButton(
-                new ButtonWidget(this.width / 2 - 155, 100 + yOffset, 150, 20, SETUP_GUIDE, buttonWidget -> {
-                    Util.getOperatingSystem().open(contactInfo.get("sources").get() + "#setup");
-                }));
-        this.addButton(new ButtonWidget(this.width / 2 - 155 + 160, 100 + yOffset, 150, 20, ScreenTexts.PROCEED,
+        this.addButton(new ButtonWidget(this.width / 2 - 155, 100 + yOffset, 150, 20, ScreenTexts.CANCEL,
                 buttonWidget -> {
-                    if (this.checkbox.isChecked()) {
-                        LANExtenderConfig config = LANExtenderConfig.getInstance();
-                        config.hideAuthTokenMissingWarning = true;
-                        LANExtenderConfig.saveConfig();
-                    }
-                    warningHasBeenShown = true;
                     this.client.openScreen(this.parent);
+                }));
+        this.addButton(new ButtonWidget(this.width / 2 + 5, 100 + yOffset, 150, 20, ScreenTexts.PROCEED,
+                buttonWidget -> {
+                    this.client.stop();
                 }));
     }
 

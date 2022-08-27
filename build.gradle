@@ -3,8 +3,8 @@ plugins {
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -31,10 +31,10 @@ dependencies {
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
-    implementation "com.github.alexdlaird:java-ngrok:${project.ngrok_version}"
+    implementation "com.github.alexdlaird:java8-ngrok:${project.ngrok_version}"
 
     // java-ngrok and dependecies should be included in the mod jar
-    include "com.github.alexdlaird:java-ngrok:${project.ngrok_version}"
+    include "com.github.alexdlaird:java8-ngrok:${project.ngrok_version}"
     include "com.google.code.gson:gson:${project.gson_version}"
     include "org.yaml:snakeyaml:${project.snakeyaml_version}"
 }
@@ -48,8 +48,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
-	it.options.release = 17
+	options.encoding = "UTF-8"
 }
 
 java {

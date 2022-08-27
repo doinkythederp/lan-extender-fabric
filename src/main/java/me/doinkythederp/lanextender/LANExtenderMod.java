@@ -6,10 +6,9 @@ import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
-import java.util.Optional;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Nullable;
 
 import me.doinkythederp.lanextender.config.LANExtenderConfig;
 
@@ -19,7 +18,8 @@ public class LANExtenderMod implements ModInitializer {
     // That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LogManager.getLogger("lan_extender");
     public static final Text checkboxMessage = new TranslatableText("lanServer.publish");
-    public static Optional<CheckboxWidget> publishCheckbox = Optional.empty();
+    @Nullable
+    public static CheckboxWidget publishCheckbox = null;
     public static MinecraftClient client = MinecraftClient.getInstance();
     public static WorldPublisher publisher = new WorldPublisher();
 
@@ -31,7 +31,7 @@ public class LANExtenderMod implements ModInitializer {
 
         LANExtenderConfig.loadConfig();
 
-        var config = LANExtenderConfig.getInstance();
+        LANExtenderConfig config = LANExtenderConfig.getInstance();
         new Thread(() -> {
             try {
                 publisher.restartClient(config.authToken);
@@ -49,6 +49,6 @@ public class LANExtenderMod implements ModInitializer {
      * @return Returns true if the publish checkbox was present and checked.
      */
     public static boolean lanServersShouldPublish() {
-        return LANExtenderMod.publishCheckbox.isPresent() && LANExtenderMod.publishCheckbox.get().isChecked();
+        return LANExtenderMod.publishCheckbox != null && LANExtenderMod.publishCheckbox.isChecked();
     }
 }

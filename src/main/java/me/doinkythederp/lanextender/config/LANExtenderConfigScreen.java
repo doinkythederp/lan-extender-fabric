@@ -11,7 +11,7 @@ public class LANExtenderConfigScreen {
     private static final MinecraftClient client = MinecraftClient.getInstance();
 
     public static void openConfigScreen(Screen parent) {
-        final var config = LANExtenderConfig.getInstance();
+        final LANExtenderConfig config = LANExtenderConfig.getInstance();
         ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
                 .setTitle(new TranslatableText("title.lan_extender.config"))

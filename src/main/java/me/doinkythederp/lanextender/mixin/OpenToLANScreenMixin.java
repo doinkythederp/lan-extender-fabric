@@ -1,7 +1,5 @@
 package me.doinkythederp.lanextender.mixin;
 
-import java.util.Optional;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -28,9 +26,10 @@ public abstract class OpenToLANScreenMixin {
             LANExtenderMod.client.openScreen(new MissingTokenWarningScreen((Screen) (Object) this));
         }
 
-        var lanScreen = (ScreenAccessor) (Object) this;
+        ScreenAccessor lanScreen = (ScreenAccessor) (Object) this;
 
-        var configButton = new ButtonWidget(lanScreen.getWidth() / 2 - (150 / 2), lanScreen.getHeight() - 50, 150, 20,
+        ButtonWidget configButton = new ButtonWidget(lanScreen.getWidth() / 2 - (150 / 2), lanScreen.getHeight() - 50,
+                150, 20,
                 new TranslatableText("button.lan_extender.config"), buttonWidget -> {
                     LANExtenderConfigScreen.openConfigScreen((Screen) (Object) this);
                 });
@@ -41,11 +40,11 @@ public abstract class OpenToLANScreenMixin {
             return;
         }
         int messageWidth = lanScreen.getTextRenderer().getWidth(LANExtenderMod.checkboxMessage);
-        LANExtenderMod.publishCheckbox = Optional.of(
-                new CheckboxWidget((lanScreen.getWidth() - messageWidth) / 2 - 8, 128, messageWidth + 24, 20,
-                        LANExtenderMod.checkboxMessage, false));
+        LANExtenderMod.publishCheckbox = new CheckboxWidget((lanScreen.getWidth() - messageWidth) / 2 - 8, 128,
+                messageWidth + 24, 20,
+                LANExtenderMod.checkboxMessage, false);
 
-        CheckboxWidget checkbox = LANExtenderMod.publishCheckbox.get();
+        CheckboxWidget checkbox = LANExtenderMod.publishCheckbox;
         lanScreen.getButtons().add(checkbox);
         lanScreen.getChildren().add(checkbox);
     }
