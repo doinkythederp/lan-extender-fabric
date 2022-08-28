@@ -54,6 +54,11 @@ public class WorldPublisher {
         if (publishedPort.isPresent()) {
             int port = publishedPort.get();
             publishedPort = Optional.empty();
+            if (!this.isReadyToPublish()) {
+                LOGGER.info("Cannot publish in this state: use a non-empty authtoken");
+                publishedPort = Optional.of(port);
+                return;
+            }
             try {
                 Tunnel tunnel = this.publishPort(port);
                 String tunnelAddress = getTunnelAddress(tunnel);
@@ -111,8 +116,7 @@ public class WorldPublisher {
 
     public void closePort() {
         LOGGER.info("Unpublishing all ports");
-        var ngrok = this.ngrokClient.get();
-        ngrok.getTunnels().forEach(tunnel -> ngrok.disconnect(tunnel.getPublicUrl()));
+        this.ngrokClient.get().kill();
         publishedPort = Optional.empty();
     }
 
