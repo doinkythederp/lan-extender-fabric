@@ -36,7 +36,7 @@ body:
       label: Minecraft version
       description: |
         Which version of Minecraft are you running the mod on? (e.g. 1.19.2)
-      placeholder: Minecraft versions 1.18.x and below aren't currently supported.
+      placeholder: Minecraft versions 1.16.x and below aren't officially supported.
     validations:
       required: true
   - type: textarea
