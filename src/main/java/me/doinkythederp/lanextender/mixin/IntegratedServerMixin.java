@@ -11,7 +11,6 @@ import com.github.alexdlaird.ngrok.protocol.Tunnel;
 
 import me.doinkythederp.lanextender.LANExtenderMod;
 import me.doinkythederp.lanextender.WorldPublisher;
-import me.doinkythederp.lanextender.config.LANExtenderConfig;
 
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -38,9 +37,11 @@ public class IntegratedServerMixin {
                 final ChatHud chat = this.client.inGameHud.getChatHud();
                 try {
                     Tunnel tunnel = LANExtenderMod.publisher.publishPort(port);
+                    String tunnelAddress = WorldPublisher.getTunnelAddress(tunnel);
+                    client.keyboard.setClipboard(tunnelAddress);
+
                     chat.addMessage(
-                            Text.translatable("message.lan_extender.world_published",
-                                    WorldPublisher.getTunnelAddress(tunnel)));
+                            Text.translatable("message.lan_extender.world_published", tunnelAddress));
                 } catch (Exception e) {
                     LANExtenderMod.LOGGER.error("Failed to publish port:", e);
                     chat.addMessage(

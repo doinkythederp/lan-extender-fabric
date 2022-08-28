@@ -11,9 +11,13 @@ import com.github.alexdlaird.ngrok.protocol.Proto;
 import com.github.alexdlaird.ngrok.protocol.Tunnel;
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 
 import static me.doinkythederp.lanextender.LANExtenderMod.LOGGER;
+
+import java.awt.datatransfer.StringSelection;
+import java.awt.Toolkit;
 
 public class WorldPublisher {
     private static final Path NGROK_INSTALL_PATH = FabricLoader.getInstance()
@@ -23,6 +27,7 @@ public class WorldPublisher {
     private static final Path NGROK_PATH = OperatingSystemDetector.isWindows()
             ? NGROK_INSTALL_PATH.resolveSibling("ngrok.exe")
             : NGROK_INSTALL_PATH;
+    private static final MinecraftClient client = MinecraftClient.getInstance();
 
     private Optional<NgrokClient> ngrokClient = Optional.empty();
     private boolean ngrokInstalled = NGROK_PATH.toFile().exists();
@@ -51,8 +56,11 @@ public class WorldPublisher {
             publishedPort = Optional.empty();
             try {
                 Tunnel tunnel = this.publishPort(port);
+                String tunnelAddress = getTunnelAddress(tunnel);
+                client.keyboard.setClipboard(tunnelAddress);
+
                 LANExtenderMod.client.inGameHud.getChatHud().addMessage(
-                        Text.translatable("message.lan_extender.address_changed", getTunnelAddress(tunnel)));
+                        Text.translatable("message.lan_extender.address_changed", tunnelAddress));
             } catch (Exception e) {
                 LOGGER.error("Failed to re-publish port {}: {}", port, e);
             }
