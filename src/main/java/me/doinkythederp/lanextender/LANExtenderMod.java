@@ -33,7 +33,7 @@ public class LANExtenderMod implements ModInitializer {
         var config = LANExtenderConfig.getInstance();
         new Thread(() -> {
             try {
-                publisher.restartClient(config.authToken);
+                publisher.restartClient(config.authToken, config.region);
                 LOGGER.info("LAN Extender is initialized. Have fun sharing your worlds!");
             } catch (Exception e) {
                 LOGGER.error("Failed to start ngrok client: {}", e);
