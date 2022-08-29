@@ -1,7 +1,5 @@
 package me.doinkythederp.lanextender.config;
 
-import org.jetbrains.annotations.Nullable;
-
 import com.github.alexdlaird.ngrok.protocol.Region;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
@@ -55,6 +53,15 @@ public class LANExtenderModMenuIntegration implements ModMenuApi {
                         config.region = value;
                     }).build());
 
+            general.addEntry(builder.entryBuilder()
+                    .startBooleanToggle(Text.translatable("option.lan_extender.copy_on_publish"),
+                            config.copyAddressOnPublish)
+                    .setDefaultValue(true)
+                    .setTooltip(Text.translatable("tooltip.lan_extender.copy_on_publish"))
+                    .setSaveConsumer(value -> {
+                        config.copyAddressOnPublish = value;
+                    }).build());
+
             // #endregion
 
             return builder.build();
@@ -80,27 +87,6 @@ public class LANExtenderModMenuIntegration implements ModMenuApi {
                 return JAPAN;
             default:
                 throw new AssertionError("Invalid region " + region);
-        }
-    }
-
-    @Nullable
-    private static Region stringToRegion(String region) {
-        if (region.equals("us")) {
-            return Region.US;
-        } else if (region.equals(SOUTH_AMERICA.getString())) {
-            return Region.SA;
-        } else if (region.equals(EUROPE.getString())) {
-            return Region.EU;
-        } else if (region.equals(AUSTRALIA.getString())) {
-            return Region.AU;
-        } else if (region.equals(ASIA_PACIFIC.getString())) {
-            return Region.AP;
-        } else if (region.equals(INDIA.getString())) {
-            return Region.IN;
-        } else if (region.equals(JAPAN.getString())) {
-            return Region.JP;
-        } else {
-            return null;
         }
     }
 }
