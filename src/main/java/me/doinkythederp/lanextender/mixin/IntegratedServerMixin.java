@@ -19,6 +19,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.GameMode;
 
 @Mixin(IntegratedServer.class)
@@ -48,11 +49,11 @@ public class IntegratedServerMixin {
                             Text.translatable(
                                     config.copyAddressOnPublish ? "message.lan_extender.world_published_copied"
                                             : "message.lan_extender.world_published",
-                                    tunnelAddress));
+                                    Text.literal(tunnelAddress).formatted(Formatting.GREEN)));
                 } catch (Exception e) {
                     LANExtenderMod.LOGGER.error("Failed to publish port:", e);
                     chat.addMessage(
-                            Text.translatable("error.lan_extender.failed_to_publish"));
+                            Text.translatable("error.lan_extender.failed_to_publish").formatted(Formatting.RED));
                 }
             }, "LAN-Extender-Publisher").start();
         }
