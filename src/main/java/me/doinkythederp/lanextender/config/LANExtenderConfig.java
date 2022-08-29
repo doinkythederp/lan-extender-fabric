@@ -24,6 +24,7 @@ public class LANExtenderConfig {
     public String authToken = "";
     public boolean hideAuthTokenMissingWarning = false;
     public Region region = Region.US;
+    public boolean copyAddressOnPublish = true;
 
     public static LANExtenderConfig getInstance() {
         if (CONFIG_INSTANCE.isEmpty()) {
