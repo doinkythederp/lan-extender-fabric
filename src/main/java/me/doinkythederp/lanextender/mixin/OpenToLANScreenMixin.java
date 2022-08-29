@@ -21,10 +21,12 @@ public abstract class OpenToLANScreenMixin {
             return;
         }
 
-        var lanScreen = (ScreenAccessor) (Object) this;
-        int messageWidth = lanScreen.getTextRenderer().getWidth(LANExtenderMod.checkboxMessage);
+        final var lanScreen = (ScreenAccessor) (Object) this;
+        final int messageWidth = lanScreen.getTextRenderer().getWidth(LANExtenderMod.checkboxMessage);
+        final int checkboxWidth = 24;
         LANExtenderMod.publishCheckbox = Optional.of(
-                new CheckboxWidget((lanScreen.getWidth() - messageWidth) / 2 - 8, 128, messageWidth + 24, 20,
+                new CheckboxWidget((lanScreen.getWidth() - messageWidth - checkboxWidth) / 2, 128,
+                        messageWidth + checkboxWidth, 20,
                         LANExtenderMod.checkboxMessage, false));
 
         // Alternative to addDrawableChild that doesn't crash in release mode
