@@ -14,7 +14,9 @@ import com.github.alexdlaird.ngrok.protocol.Tunnel;
 import me.doinkythederp.lanextender.config.LANExtenderConfig;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import static me.doinkythederp.lanextender.LANExtenderMod.LOGGER;
 
@@ -58,6 +60,7 @@ public class WorldPublisher {
 
     private void republishPort() {
         final var config = LANExtenderConfig.getInstance();
+        final ChatHud chat = LANExtenderMod.client.inGameHud.getChatHud();
         int port = publishedPort.get();
         publishedPort = Optional.empty();
         if (!this.isReadyToPublish()) {
@@ -72,11 +75,14 @@ public class WorldPublisher {
                 client.keyboard.setClipboard(tunnelAddress);
             }
 
-            LANExtenderMod.client.inGameHud.getChatHud().addMessage(
+            chat.addMessage(
                     Text.translatable(config.copyAddressOnPublish ? "message.lan_extender.address_changed_copied"
-                            : "message.lan_extender.address_changed", tunnelAddress));
+                            : "message.lan_extender.address_changed",
+                            Text.literal(tunnelAddress).formatted(Formatting.GREEN)));
         } catch (Exception e) {
             LOGGER.error("Failed to re-publish port {}: {}", port, e);
+            chat.addMessage(
+                    Text.translatable("error.lan_extender.failed_to_publish").formatted(Formatting.RED));
         }
 
     }
