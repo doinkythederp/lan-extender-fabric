@@ -9,6 +9,7 @@ import com.github.alexdlaird.ngrok.conf.JavaNgrokConfig;
 import com.github.alexdlaird.ngrok.installer.NgrokInstaller;
 import com.github.alexdlaird.ngrok.protocol.CreateTunnel;
 import com.github.alexdlaird.ngrok.protocol.Proto;
+import com.github.alexdlaird.ngrok.protocol.Region;
 import com.github.alexdlaird.ngrok.protocol.Tunnel;
 
 import net.fabricmc.loader.api.FabricLoader;
@@ -33,7 +34,7 @@ public class WorldPublisher {
     @Nullable
     private Integer publishedPort = null;
 
-    public void restartClient(String authToken) {
+    public void restartClient(String authToken, Region region) {
         LOGGER.info("Starting ngrok client");
         this.installNgrokIfNeeded();
 
@@ -45,6 +46,7 @@ public class WorldPublisher {
         JavaNgrokConfig ngrokConfig = new JavaNgrokConfig.Builder()
                 .withAuthToken(authToken)
                 .withNgrokPath(NGROK_PATH)
+                .withRegion(region)
                 .build();
         NgrokClient ngrokClient = new NgrokClient.Builder()
                 .withJavaNgrokConfig(ngrokConfig)

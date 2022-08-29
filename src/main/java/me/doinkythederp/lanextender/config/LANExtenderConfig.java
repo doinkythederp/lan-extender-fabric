@@ -8,6 +8,7 @@ import java.nio.file.Path;
 
 import org.jetbrains.annotations.Nullable;
 
+import com.github.alexdlaird.ngrok.protocol.Region;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -24,6 +25,8 @@ public class LANExtenderConfig {
 
     public String authToken = "";
     public boolean hideAuthTokenMissingWarning = false;
+    public Region region = Region.US;
+    public boolean copyAddressOnPublish = true;
 
     public static LANExtenderConfig getInstance() {
         if (CONFIG_INSTANCE == null) {

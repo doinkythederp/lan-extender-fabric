@@ -1,14 +1,24 @@
 package me.doinkythederp.lanextender.config;
 
+import com.github.alexdlaird.ngrok.protocol.Region;
+
 import me.doinkythederp.lanextender.LANExtenderMod;
 import me.shedaniel.clothconfig2.api.ConfigBuilder;
 import me.shedaniel.clothconfig2.api.ConfigCategory;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
 public class LANExtenderConfigScreen {
     private static final MinecraftClient client = MinecraftClient.getInstance();
+    private static final Text JAPAN = new TranslatableText("region.lan_extender.japan");
+    private static final Text INDIA = new TranslatableText("region.lan_extender.india");
+    private static final Text AUSTRALIA = new TranslatableText("region.lan_extender.australia");
+    private static final Text ASIA_PACIFIC = new TranslatableText("region.lan_extender.asia_pacific");
+    private static final Text EUROPE = new TranslatableText("region.lan_extender.europe");
+    private static final Text SOUTH_AMERICA = new TranslatableText("region.lan_extender.south_america");
+    private static final Text NORTH_AMERICA = new TranslatableText("region.lan_extender.north_america");
 
     public static void openConfigScreen(Screen parent) {
         final LANExtenderConfig config = LANExtenderConfig.getInstance();
@@ -17,9 +27,12 @@ public class LANExtenderConfigScreen {
                 .setTitle(new TranslatableText("title.lan_extender.config"))
                 .setSavingRunnable(() -> {
                     LANExtenderConfig.saveConfig();
-                    LANExtenderMod.publisher.restartClient(config.authToken);
+                    LANExtenderMod.publisher.restartClient(config.authToken, config.region);
                 });
+
+        // #region General
         ConfigCategory general = builder.getOrCreateCategory(new TranslatableText("category.lan_extender.general"));
+
         general.addEntry(builder.entryBuilder()
                 .startStrField(
                         new TranslatableText("option.lan_extender.auth_token"),
@@ -30,6 +43,54 @@ public class LANExtenderConfigScreen {
                 .setSaveConsumer(value -> {
                     config.authToken = value;
                 }).build());
+
+        general.addEntry(builder.entryBuilder()
+                .startEnumSelector(
+                        new TranslatableText("option.lan_extender.region"),
+                        Region.class, config.region)
+                .setDefaultValue(Region.US)
+                .setEnumNameProvider(
+                        LANExtenderConfigScreen::regionToText)
+                .setTooltip(
+                        new TranslatableText("tooltip.lan_extender.region"))
+                .setSaveConsumer(value -> {
+                    config.region = value;
+                }).build());
+
+        general.addEntry(builder.entryBuilder()
+                .startBooleanToggle(
+                        new TranslatableText("option.lan_extender.copy_on_publish"),
+                        config.copyAddressOnPublish)
+                .setDefaultValue(true)
+                .setTooltip(
+                        new TranslatableText("tooltip.lan_extender.copy_on_publish"))
+                .setSaveConsumer(value -> {
+                    config.copyAddressOnPublish = value;
+                }).build());
+
+        // #endregion
+
         client.openScreen(builder.build());
+    }
+
+    private static Text regionToText(Enum<Region> region) {
+        switch ((Region) region) {
+            case US:
+                return NORTH_AMERICA;
+            case SA:
+                return SOUTH_AMERICA;
+            case EU:
+                return EUROPE;
+            case AU:
+                return AUSTRALIA;
+            case AP:
+                return ASIA_PACIFIC;
+            case IN:
+                return INDIA;
+            case JP:
+                return JAPAN;
+            default:
+                throw new AssertionError("Invalid region " + region);
+        }
     }
 }
