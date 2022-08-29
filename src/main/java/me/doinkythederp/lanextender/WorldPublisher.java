@@ -11,6 +11,7 @@ import com.github.alexdlaird.ngrok.protocol.Proto;
 import com.github.alexdlaird.ngrok.protocol.Region;
 import com.github.alexdlaird.ngrok.protocol.Tunnel;
 
+import me.doinkythederp.lanextender.config.LANExtenderConfig;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
@@ -51,24 +52,33 @@ public class WorldPublisher {
         this.ngrokClient = Optional.of(ngrokClient);
 
         if (publishedPort.isPresent()) {
-            int port = publishedPort.get();
-            publishedPort = Optional.empty();
-            if (!this.isReadyToPublish()) {
-                LOGGER.info("Cannot publish in this state: use a non-empty authtoken");
-                publishedPort = Optional.of(port);
-                return;
-            }
-            try {
-                Tunnel tunnel = this.publishPort(port);
-                String tunnelAddress = getTunnelAddress(tunnel);
-                client.keyboard.setClipboard(tunnelAddress);
-
-                LANExtenderMod.client.inGameHud.getChatHud().addMessage(
-                        Text.translatable("message.lan_extender.address_changed", tunnelAddress));
-            } catch (Exception e) {
-                LOGGER.error("Failed to re-publish port {}: {}", port, e);
-            }
+            this.republishPort();
         }
+    }
+
+    private void republishPort() {
+        final var config = LANExtenderConfig.getInstance();
+        int port = publishedPort.get();
+        publishedPort = Optional.empty();
+        if (!this.isReadyToPublish()) {
+            LOGGER.info("Cannot publish in this state: use a non-empty authtoken");
+            publishedPort = Optional.of(port);
+            return;
+        }
+        try {
+            Tunnel tunnel = this.publishPort(port);
+            String tunnelAddress = getTunnelAddress(tunnel);
+            if (config.copyAddressOnPublish) {
+                client.keyboard.setClipboard(tunnelAddress);
+            }
+
+            LANExtenderMod.client.inGameHud.getChatHud().addMessage(
+                    Text.translatable(config.copyAddressOnPublish ? "message.lan_extender.address_changed_copied"
+                            : "message.lan_extender.address_changed", tunnelAddress));
+        } catch (Exception e) {
+            LOGGER.error("Failed to re-publish port {}: {}", port, e);
+        }
+
     }
 
     private void installNgrokIfNeeded() {
