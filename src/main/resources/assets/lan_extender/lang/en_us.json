@@ -2,7 +2,7 @@
     "lanServer.publish": "Allow players connected to a different router to join",
     "title.lan_extender.config": "LAN Extender Options",
     "option.lan_extender.auth_token": "Ngrok Authtoken",
-    "tooltip.lan_extender.auth_token": "Get this from \"Your Authtoken\" at www.ngrok.com",
+    "tooltip.lan_extender.auth_token": "Get this from \"Your Authtoken\" at dashboard.ngrok.com",
     "option.lan_extender.region": "Region",
     "tooltip.lan_extender.region": "Set this to where you are to get a faster connection",
     "option.lan_extender.copy_on_publish": "Auto-copy world address",
