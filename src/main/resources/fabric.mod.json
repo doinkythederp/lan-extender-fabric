@@ -25,7 +25,7 @@
         "fabric": "*",
         "minecraft": "^1.19.3",
         "java": ">=17",
-        "cloth-config": ["7.x", "8.x"]
+        "yet-another-config-lib": "2.x"
     },
     "suggests": {
         "modmenu": ">=5"
