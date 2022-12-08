@@ -4,9 +4,7 @@
     "version": "${version}",
     "name": "LAN Extender",
     "description": "Turn your LAN worlds into fully-fledged servers, for free.",
-    "authors": [
-        "doinkythederp"
-    ],
+    "authors": ["doinkythederp"],
     "contact": {
         "sources": "https://github.com/doinkythederp/lan-extender-fabric",
         "homepage": "https://github.com/doinkythederp/lan-extender-fabric#readme",
@@ -16,28 +14,21 @@
     "icon": "assets/lan_extender/icon.png",
     "environment": "*",
     "entrypoints": {
-        "main": [
-            "me.doinkythederp.lanextender.LANExtenderMod"
-        ],
+        "main": ["me.doinkythederp.lanextender.LANExtenderMod"],
         "modmenu": [
             "me.doinkythederp.lanextender.config.LANExtenderModMenuIntegration"
         ]
     },
-    "mixins": [
-        "lan_extender.mixins.json"
-    ],
+    "mixins": ["lan_extender.mixins.json"],
     "depends": {
         "fabricloader": ">=0.14.6",
         "fabric": "*",
-        "minecraft": "~1.19",
+        "minecraft": "^1.19.3",
         "java": ">=17",
-        "cloth-config": [
-            "7.x",
-            "8.x"
-        ]
+        "cloth-config": ["7.x", "8.x"]
     },
     "suggests": {
-        "modmenu": ">=4.0.3"
+        "modmenu": ">=5"
     },
     "accessWidener": "lan_extender.accesswidener"
 }

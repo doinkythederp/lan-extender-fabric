@@ -38,19 +38,20 @@ public class MissingTokenWarningScreen extends WarningScreen {
 
     @Override
     protected void initButtons(int yOffset) {
-        this.addDrawableChild(
-                new ButtonWidget(this.width / 2 - 155, 100 + yOffset, 150, 20, SETUP_GUIDE, buttonWidget -> {
-                    Util.getOperatingSystem().open(contactInfo.get("sources").get() + "#setup");
-                }));
-        this.addDrawableChild(new ButtonWidget(this.width / 2 - 155 + 160, 100 + yOffset, 150, 20, ScreenTexts.PROCEED,
-                buttonWidget -> {
-                    if (this.checkbox.isChecked()) {
-                        var config = LANExtenderConfig.getInstance();
-                        config.hideAuthTokenMissingWarning = true;
-                        LANExtenderConfig.saveConfig();
-                    }
-                    warningHasBeenShown = true;
-                    this.client.setScreen(this.parent);
-                }));
+        ButtonWidget openGuideButton = ButtonWidget.builder(SETUP_GUIDE, buttonWidget -> {
+            Util.getOperatingSystem().open(contactInfo.get("sources").get() + "#setup");
+        }).position(this.width / 2 - 155, 100 + yOffset).size(150, 20).build();
+        ButtonWidget proceedButton = ButtonWidget.builder(ScreenTexts.PROCEED, buttonWidget -> {
+            if (this.checkbox.isChecked()) {
+                var config = LANExtenderConfig.getInstance();
+                config.hideAuthTokenMissingWarning = true;
+                LANExtenderConfig.saveConfig();
+            }
+            warningHasBeenShown = true;
+            this.client.setScreen(this.parent);
+        }).position(this.width / 2 - 155 + 160, 100 + yOffset).size(150, 20).build();
+
+        this.addDrawableChild(openGuideButton);
+        this.addDrawableChild(proceedButton);
     }
 }
