@@ -11,7 +11,9 @@ import me.doinkythederp.lanextender.LANExtenderMod;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.minecraft.client.gui.screen.OpenToLanScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.CheckboxWidget;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 
 @Mixin(OpenToLanScreen.class)
 public abstract class OpenToLANScreenMixin {
@@ -22,10 +24,11 @@ public abstract class OpenToLANScreenMixin {
         }
 
         final var lanScreen = (ScreenAccessor) (Object) this;
+        final Screen parent = ((OpenToLANScreenAccessor) (Object) this).getParent();
         final int messageWidth = lanScreen.getTextRenderer().getWidth(LANExtenderMod.checkboxMessage);
         final int checkboxWidth = 24;
         LANExtenderMod.publishCheckbox = Optional.of(
-                new CheckboxWidget((lanScreen.getWidth() - messageWidth - checkboxWidth) / 2, 128,
+                new CheckboxWidget((lanScreen.getWidth() - messageWidth - checkboxWidth) / 2, parent.height - 50,
                         messageWidth + checkboxWidth, 20,
                         LANExtenderMod.checkboxMessage, false));
 
