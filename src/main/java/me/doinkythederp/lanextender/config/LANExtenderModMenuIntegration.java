@@ -7,6 +7,7 @@ import com.terraformersmc.modmenu.api.ModMenuApi;
 import dev.isxander.yacl.api.ConfigCategory;
 import dev.isxander.yacl.api.Option;
 import dev.isxander.yacl.api.YetAnotherConfigLib;
+import dev.isxander.yacl.gui.controllers.string.StringController;
 import me.doinkythederp.lanextender.LANExtenderMod;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
@@ -31,7 +32,18 @@ public class LANExtenderModMenuIntegration implements ModMenuApi {
                     })
                     .category(ConfigCategory.createBuilder()
                             .name(Text.translatable(
-                                    "category.lan_extender.general"))
+                                    "title.lan_extender.config"))
+                            .option(Option.createBuilder(String.class)
+                                    .name(Text.translatable(
+                                            "option.lan_extender.auth_token"))
+                                    .tooltip(Text.translatable(
+                                            "tooltip.lan_extender.auth_token"))
+                                    .binding(
+                                            config.authToken,
+                                            () -> config.authToken,
+                                            newValue -> config.authToken = newValue)
+                                    .controller(StringController::new)
+                                    .build())
                             .build())
                     .build()
                     .generateScreen(parent);
