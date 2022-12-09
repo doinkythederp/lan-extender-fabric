@@ -19,6 +19,9 @@ public interface ScreenAccessor {
     @Accessor
     public int getWidth();
 
+    @Accessor
+    public int getHeight();
+
     // addDrawableChild appears to crash outside of development mode so the
     // alternative is to use add the element to all 3 of the following lists
 

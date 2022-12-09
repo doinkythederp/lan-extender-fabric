@@ -7,6 +7,7 @@
     "client": [
         "OpenToLANScreenMixin",
         "ScreenAccessor",
+        "OpenToLANScreenAccessor",
         "IntegratedServerMixin",
         "MinecraftClientMixin",
         "TitleScreenMixin"
