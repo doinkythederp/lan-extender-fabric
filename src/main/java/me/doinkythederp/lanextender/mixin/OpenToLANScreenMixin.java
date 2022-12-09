@@ -43,4 +43,9 @@ public abstract class OpenToLANScreenMixin {
         lanScreen.getChildren().add(checkbox);
         lanScreen.getSelectables().add(checkbox);
     }
+
+    @ModifyArg(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawableHelper;drawCenteredText(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/text/Text;III)V"), index = 4)
+    private int injected(int y) {
+        return y * 3;
+    }
 }
