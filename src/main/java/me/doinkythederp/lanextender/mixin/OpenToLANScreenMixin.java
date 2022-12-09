@@ -4,16 +4,20 @@ import java.util.Optional;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import me.doinkythederp.lanextender.LANExtenderMod;
 
 import org.spongepowered.asm.mixin.injection.At;
 
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.OpenToLanScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.CheckboxWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
 
 @Mixin(OpenToLanScreen.class)
 public abstract class OpenToLANScreenMixin {
@@ -28,7 +32,8 @@ public abstract class OpenToLANScreenMixin {
         final int messageWidth = lanScreen.getTextRenderer().getWidth(LANExtenderMod.checkboxMessage);
         final int checkboxWidth = 24;
         LANExtenderMod.publishCheckbox = Optional.of(
-                new CheckboxWidget((lanScreen.getWidth() - messageWidth - checkboxWidth) / 2, parent.height - 50,
+                new CheckboxWidget((lanScreen.getWidth() - messageWidth - checkboxWidth) / 2,
+                        lanScreen.getHeight() - 56,
                         messageWidth + checkboxWidth, 20,
                         LANExtenderMod.checkboxMessage, false));
 
