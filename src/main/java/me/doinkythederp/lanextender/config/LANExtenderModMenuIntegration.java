@@ -7,6 +7,8 @@ import com.terraformersmc.modmenu.api.ModMenuApi;
 import dev.isxander.yacl.api.ConfigCategory;
 import dev.isxander.yacl.api.Option;
 import dev.isxander.yacl.api.YetAnotherConfigLib;
+import dev.isxander.yacl.gui.controllers.BooleanController;
+import dev.isxander.yacl.gui.controllers.cycling.EnumController;
 import dev.isxander.yacl.gui.controllers.string.StringController;
 import me.doinkythederp.lanextender.LANExtenderMod;
 import net.minecraft.client.gui.screen.Screen;
@@ -39,59 +41,31 @@ public class LANExtenderModMenuIntegration implements ModMenuApi {
                                     .tooltip(Text.translatable(
                                             "tooltip.lan_extender.auth_token"))
                                     .binding(
-                                            config.authToken,
+                                            "",
                                             () -> config.authToken,
                                             newValue -> config.authToken = newValue)
                                     .controller(StringController::new)
                                     .build())
+                            .option(Option.createBuilder(Region.class)
+                                    .name(Text.translatable("option.lan_extender.region"))
+                                    .tooltip(Text.translatable("tooltip.lan_extender.region"))
+                                    .binding(Region.US, () -> config.region, region -> config.region = region)
+                                    .controller(option -> new EnumController<Region>(
+                                            option, region -> LANExtenderModMenuIntegration.regionToText(region)))
+                                    .build())
+                            .option(Option.createBuilder(Boolean.class)
+                                    .name(Text.translatable(
+                                            "option.lan_extender.copy_on_publish"))
+                                    .tooltip(Text.translatable(
+                                            "tooltip.lan_extender.copy_on_publish"))
+                                    .binding(true, () -> config.copyAddressOnPublish,
+                                            value -> config.copyAddressOnPublish = value)
+                                    .controller(
+                                            BooleanController::new)
+                                    .build())
                             .build())
                     .build()
                     .generateScreen(parent);
-            // ConfigBuilder builder = ConfigBuilder.create()
-            // .setParentScreen(parent)
-            // .setTitle(Text.translatable("title.lan_extender.config"))
-            // .setSavingRunnable(() -> {
-            // LANExtenderConfig.saveConfig();
-            // LANExtenderMod.publisher.restartClient(config.authToken, config.region);
-            // });
-
-            // // #region General
-            // ConfigCategory general =
-            // builder.getOrCreateCategory(Text.translatable("category.lan_extender.general"));
-
-            // general.addEntry(builder.entryBuilder()
-            // .startStrField(Text.translatable("option.lan_extender.auth_token"),
-            // config.authToken)
-            // .setDefaultValue("")
-            // .setTooltip(Text.translatable("tooltip.lan_extender.auth_token"))
-            // .setSaveConsumer(value -> {
-            // config.authToken = value;
-            // }).build());
-
-            // general.addEntry(builder.entryBuilder()
-            // .startEnumSelector(Text.translatable("option.lan_extender.region"),
-            // Region.class, config.region)
-            // .setDefaultValue(Region.US)
-            // .setEnumNameProvider(
-            // LANExtenderModMenuIntegration::regionToText)
-            // .setTooltip(Text.translatable("tooltip.lan_extender.region"))
-            // .setSaveConsumer(value -> {
-            // config.region = value;
-            // }).build());
-
-            // general.addEntry(builder.entryBuilder()
-            // .startBooleanToggle(Text.translatable("option.lan_extender.copy_on_publish"),
-            // config.copyAddressOnPublish)
-            // .setDefaultValue(true)
-            // .setTooltip(Text.translatable("tooltip.lan_extender.copy_on_publish"))
-            // .setSaveConsumer(value -> {
-            // config.copyAddressOnPublish = value;
-            // }).build());
-
-            // // #endregion
-
-            // return builder.build();
-
         };
     }
 
