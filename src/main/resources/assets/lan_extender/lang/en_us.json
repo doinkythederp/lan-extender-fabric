@@ -1,6 +1,6 @@
 {
     "lanServer.publish": "Publish to the internet",
-    "title.lan_extender.config": "LAN Extender Options",
+    "title.lan_extender.config": "LAN Extender",
     "option.lan_extender.auth_token": "Ngrok Authtoken",
     "tooltip.lan_extender.auth_token": "Get this from \"Your Authtoken\" at dashboard.ngrok.com",
     "option.lan_extender.region": "Region",
