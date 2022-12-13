@@ -63,6 +63,16 @@ public class LANExtenderModMenuIntegration implements ModMenuApi {
                                     .controller(
                                             BooleanController::new)
                                     .build())
+                            .option(Option.createBuilder(Boolean.class)
+                                    .name(Text.translatable(
+                                            "option.lan_extender.auto_publish"))
+                                    .tooltip(Text.translatable(
+                                            "tooltip.lan_extender.auto_publish"))
+                                    .binding(true, () -> config.autoPublishWorlds,
+                                            value -> config.autoPublishWorlds = value)
+                                    .controller(
+                                            BooleanController::new)
+                                    .build())
                             .build())
                     .build()
                     .generateScreen(parent);
