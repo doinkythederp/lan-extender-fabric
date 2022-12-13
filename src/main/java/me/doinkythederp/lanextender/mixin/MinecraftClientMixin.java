@@ -2,8 +2,10 @@ package me.doinkythederp.lanextender.mixin;
 
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import me.doinkythederp.lanextender.LANExtenderMod;
+import me.doinkythederp.lanextender.config.LANExtenderConfig;
 
 import java.util.Optional;
 

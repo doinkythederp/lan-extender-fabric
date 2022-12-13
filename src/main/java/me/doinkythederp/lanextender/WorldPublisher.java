@@ -20,6 +20,7 @@ import net.minecraft.util.Formatting;
 
 import static me.doinkythederp.lanextender.LANExtenderMod.LOGGER;
 
+/** Handles creating, closing, and restarting the Ngrok client */
 public class WorldPublisher {
     private static final Path NGROK_INSTALL_PATH = FabricLoader.getInstance()
             .getGameDir()
@@ -33,6 +34,14 @@ public class WorldPublisher {
     private Optional<NgrokClient> ngrokClient = Optional.empty();
     private boolean ngrokInstalled = NGROK_PATH.toFile().exists();
     private Optional<Integer> publishedPort = Optional.empty();
+
+    public boolean isPublished() {
+        return publishedPort.isPresent();
+    }
+
+    public Optional<Integer> getPublishedPort() {
+        return publishedPort;
+    }
 
     public void restartClient(String authToken, Region region) {
         LOGGER.info("Starting ngrok client");
