@@ -6,10 +6,12 @@ import com.terraformersmc.modmenu.api.ModMenuApi;
 
 import dev.isxander.yacl.api.ConfigCategory;
 import dev.isxander.yacl.api.Option;
+import dev.isxander.yacl.api.OptionGroup;
 import dev.isxander.yacl.api.YetAnotherConfigLib;
 import dev.isxander.yacl.gui.controllers.BooleanController;
 import dev.isxander.yacl.gui.controllers.cycling.EnumController;
 import dev.isxander.yacl.gui.controllers.string.StringController;
+import dev.isxander.yacl.gui.controllers.string.number.IntegerFieldController;
 import me.doinkythederp.lanextender.LANExtenderMod;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
@@ -51,27 +53,44 @@ public class LANExtenderModMenuIntegration implements ModMenuApi {
                                     .tooltip(Text.translatable("tooltip.lan_extender.region"))
                                     .binding(Region.US, () -> config.region, region -> config.region = region)
                                     .controller(option -> new EnumController<Region>(
-                                            option, region -> LANExtenderModMenuIntegration.regionToText(region)))
+                                            option,
+                                            region -> LANExtenderModMenuIntegration.regionToText(region)))
                                     .build())
-                            .option(Option.createBuilder(Boolean.class)
-                                    .name(Text.translatable(
-                                            "option.lan_extender.copy_on_publish"))
-                                    .tooltip(Text.translatable(
-                                            "tooltip.lan_extender.copy_on_publish"))
-                                    .binding(true, () -> config.copyAddressOnPublish,
-                                            value -> config.copyAddressOnPublish = value)
-                                    .controller(
-                                            BooleanController::new)
+                            .group(OptionGroup.createBuilder()
+                                    .name(Text.translatable("group.lan_extender.utility"))
+                                    .option(Option.createBuilder(Boolean.class)
+                                            .name(Text.translatable(
+                                                    "option.lan_extender.copy_on_publish"))
+                                            .tooltip(Text.translatable(
+                                                    "tooltip.lan_extender.copy_on_publish"))
+                                            .binding(true, () -> config.copyAddressOnPublish,
+                                                    value -> config.copyAddressOnPublish = value)
+                                            .controller(
+                                                    BooleanController::new)
+                                            .build())
                                     .build())
-                            .option(Option.createBuilder(Boolean.class)
-                                    .name(Text.translatable(
-                                            "option.lan_extender.auto_publish"))
-                                    .tooltip(Text.translatable(
-                                            "tooltip.lan_extender.auto_publish"))
-                                    .binding(true, () -> config.autoPublishWorlds,
-                                            value -> config.autoPublishWorlds = value)
-                                    .controller(
-                                            BooleanController::new)
+                            .group(OptionGroup.createBuilder()
+                                    .name(Text.translatable("group.lan_extender.auto_publish"))
+                                    .option(Option.createBuilder(Boolean.class)
+                                            .name(Text.translatable(
+                                                    "option.lan_extender.auto_publish"))
+                                            .tooltip(Text.translatable(
+                                                    "tooltip.lan_extender.auto_publish"))
+                                            .binding(false, () -> config.autoPublishWorlds,
+                                                    value -> config.autoPublishWorlds = value)
+                                            .controller(
+                                                    BooleanController::new)
+                                            .build())
+                                    .option(Option.createBuilder(int.class)
+                                            .name(Text.translatable(
+                                                    "option.lan_extender.auto_publish.port"))
+                                            .tooltip(Text.translatable(
+                                                    "tooltip.lan_extender.auto_publish.port"))
+                                            .binding(0, () -> config.autoPublishPort,
+                                                    value -> config.autoPublishPort = value)
+                                            .controller(
+                                                    IntegerFieldController::new)
+                                            .build())
                                     .build())
                             .build())
                     .build()

@@ -26,6 +26,7 @@ public class LANExtenderConfig {
     public Region region = Region.US;
     public boolean copyAddressOnPublish = true;
     public boolean autoPublishWorlds = false;
+    public int autoPublishPort = 0;
 
     public static LANExtenderConfig getInstance() {
         if (CONFIG_INSTANCE.isEmpty()) {
